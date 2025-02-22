@@ -1,18 +1,18 @@
 AFRAME.registerComponent('sakura-circle', {
-  schema: {
-    resolution: {type: 'int', default: 512},
-    backSide: {type: 'boolean', default: false},
-  },
+    schema: {
+        resolution: { type: 'int', default: 512 },
+        backSide: { type: 'boolean', default: false },
+    },
 
-  init: function () {
-    this.material = this.el.getObject3D('mesh').material = new THREE.ShaderMaterial({
+    init: function () {
+        this.material = this.el.getObject3D('mesh').material =
+            new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0 },
+                    resolution: { value: this.resolution },
+                },
 
-      uniforms: {
-        time: {value: 0},
-        resolution: {value: this.resolution}
-      },
-
-      vertexShader: /*glsl*/ `
+                vertexShader: /*glsl*/ `
         varying vec2 vUv;
 
         void main() {
@@ -21,7 +21,7 @@ AFRAME.registerComponent('sakura-circle', {
         }
       `,
 
-      fragmentShader: /*glsl*/ `
+                fragmentShader: /*glsl*/ `
         precision highp float; // mediump or highp
 
         #define PI 3.14159265359
@@ -86,18 +86,16 @@ AFRAME.registerComponent('sakura-circle', {
           gl_FragColor = vec4(color,1.0);
         }
       `,
+            });
 
-    });
+        if (this.data.backSide) this.material.side = THREE.BackSide;
+    },
 
-    if (this.data.backSide) this.material.side = THREE.BackSide;
-  },
+    tick: function (elapsedT) {
+        this.material.uniforms.time.value = elapsedT;
+    },
 
-  tick: function (elapsedT) {
-    this.material.uniforms.time.value = elapsedT;
-  },
-
-  remove: function () {
-    this.material.dispose();
-  },
-
+    remove: function () {
+        this.material.dispose();
+    },
 });

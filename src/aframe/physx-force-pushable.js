@@ -40,60 +40,58 @@ SOFTWARE.
  * Requires: physx
  */
 AFRAME.registerComponent('physx-force-pushable', {
-  schema: {
-    target: {type: 'selector', default: '[camera]'},
-    event: {type: 'string', default: 'click'},
-    force: { default: 10 }
-  },
-  init: function () {
+    schema: {
+        target: { type: 'selector', default: '[camera]' },
+        event: { type: 'string', default: 'click' },
+        force: { default: 10 },
+    },
+    init: function () {
+        this.pStart = new THREE.Vector3();
+        this.sourceEl = this.data.target;
+        this.forcePushPhysX = this.forcePushPhysX.bind(this);
+        this.sourcePosition = new THREE.Vector3();
+        this.force = new THREE.Vector3();
+        this.pos = new THREE.Vector3();
+    },
 
-    this.pStart = new THREE.Vector3();
-    this.sourceEl = this.data.target;
-    this.forcePushPhysX = this.forcePushPhysX.bind(this);
-    this.sourcePosition = new THREE.Vector3();
-    this.force = new THREE.Vector3();
-    this.pos = new THREE.Vector3();
-  },
+    play() {
+        this.el.addEventListener(this.data.event, this.forcePushPhysX);
+    },
 
-  play() {
-    this.el.addEventListener(this.data.event, this.forcePushPhysX);
-  },
+    pause() {
+        this.el.removeEventListener(this.data.event, this.forcePushPhysX);
+    },
 
-  pause() {
-    this.el.removeEventListener(this.data.event, this.forcePushPhysX);
-  },
+    remove() {
+        this.el.removeEventListener(this.data.event, this.forcePushPhysX);
+    },
 
-  remove() {
-    this.el.removeEventListener(this.data.event, this.forcePushPhysX);
-  },
+    forcePushPhysX: function (e) {
+        const el = this.el;
+        if (!el.components['physx-body']) return;
+        const body = el.components['physx-body'].rigidBody;
+        if (!body) return;
 
-  forcePushPhysX: function (e) {
+        const force = this.force;
+        const source = this.sourcePosition;
 
-    const el = this.el
-    if (!el.components['physx-body']) return
-    const body = el.components['physx-body'].rigidBody
-    if (!body) return
+        // WebXR requires care getting camera position https://github.com/mrdoob/three.js/issues/18448
+        source.setFromMatrixPosition(this.sourceEl.object3D.matrixWorld);
 
-    const force = this.force
-    const source = this.sourcePosition
+        el.object3D.getWorldPosition(force);
+        force.sub(source);
 
-    // WebXR requires care getting camera position https://github.com/mrdoob/three.js/issues/18448
-    source.setFromMatrixPosition( this.sourceEl.object3D.matrixWorld );
+        force.normalize();
 
-    el.object3D.getWorldPosition(force)
-    force.sub(source)
+        // not sure about units, but force seems stronger with PhysX than Cannon, so scaling down
+        // by a factor of 5.
+        force.multiplyScalar(this.data.force / 5);
 
-    force.normalize();
+        // use data from intersection to determine point at which to apply impulse.
+        const pos = this.pos;
+        pos.copy(e.detail.intersection.point);
+        el.object3D.worldToLocal(pos);
 
-    // not sure about units, but force seems stronger with PhysX than Cannon, so scaling down
-    // by a factor of 5.
-    force.multiplyScalar(this.data.force / 5);
-
-    // use data from intersection to determine point at which to apply impulse.
-    const pos = this.pos
-    pos.copy(e.detail.intersection.point)
-    el.object3D.worldToLocal(pos)
-
-    body.addImpulseAtLocalPos(force, pos);
-  }
+        body.addImpulseAtLocalPos(force, pos);
+    },
 });

@@ -4,6 +4,7 @@ import TheCameraRig from './TheCameraRig.vue';
 
 import TheFloor from './TheFloor.vue';
 import AppFlower from './AppFlower.vue';
+import AppLamp from './AppLamp.vue';
 
 const allAssetsLoaded = ref(false);
 </script>
@@ -22,6 +23,9 @@ const allAssetsLoaded = ref(false);
                 light="type: point; intensity: 2"
                 position="0 0 -10"
             ></a-entity>
+
+            <a-box position="0 0.5 0"></a-box>
+            <AppLamp position="2 0 0.15"></AppLamp>
 
             <AppFlower position="0 0 -2" flowerName="sunflower"></AppFlower>
             <AppFlower position="0 0 -10" flowerName="daisy"></AppFlower>

@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from 'vue';
-const allAssetsLoaded = ref(false);
+import '../aframe/simple-grab.js';
+import '../aframe/clickable.js';
+import '../aframe/event-set.js';
 
 const props = defineProps({
     flowerName: {
@@ -15,43 +16,28 @@ const props = defineProps({
 
 const flowers = {
     daisy: {
-        src: './assets/flowers/daisy-normal.glb',
         scale: '0.15 0.15 0.15',
     },
     sunflower: {
-        src: './assets/flowers/sunflower-normal.glb',
         scale: '0.3 0.3 0.3',
     },
     tulip: {
-        src: './assets/flowers/tulip-normal.glb',
         scale: '0.5 0.5 0.5',
     },
 };
-
-import '../aframe/simple-grab.js';
-import '../aframe/clickable.js';
-import '../aframe/event-set.js';
 
 const flowerId = `flower-${Math.random().toString(36).substring(2, 9)}`;
 </script>
 
 <template>
-    <a-assets @loaded="allAssetsLoaded = true">
-        <a-asset-item
-            :id="`flower-${flowerName}`"
-            :src="flowers[flowerName].src"
-        ></a-asset-item>
-    </a-assets>
-    <template v-if="allAssetsLoaded">
-        <a-gltf-model
-            :position="position"
-            :id="flowerId"
-            :src="`#flower-${flowerName}`"
-            simple-grab
-            clickable
-            :scale="flowers[flowerName].scale"
-        ></a-gltf-model>
-    </template>
+    <a-gltf-model
+        :position="position"
+        :id="flowerId"
+        :src="`#flower-${flowerName}`"
+        simple-grab
+        clickable
+        :scale="flowers[flowerName].scale"
+    ></a-gltf-model>
 </template>
 
 <style scoped></style>

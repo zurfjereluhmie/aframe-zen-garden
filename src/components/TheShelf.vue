@@ -1,7 +1,4 @@
 <script setup>
-import { ref } from 'vue';
-const allAssetsLoaded = ref(false);
-
 defineProps({
     position: {
         type: String,
@@ -15,19 +12,14 @@ defineProps({
 </script>
 
 <template>
-    <a-assets @loaded="allAssetsLoaded = true">
-        <a-asset-item id="shelf" src="./assets/shelf.glb"></a-asset-item>
-    </a-assets>
-    <template v-if="allAssetsLoaded">
-        <a-gltf-model
-            :position="position"
-            :rotation="rotation"
-            ref="lamp"
-            src="#shelf"
-            scale="1 1 1"
-        >
-        </a-gltf-model>
-    </template>
+    <a-gltf-model
+        :position="position"
+        :rotation="rotation"
+        ref="lamp"
+        src="#shelf"
+        scale="1 1 1"
+    >
+    </a-gltf-model>
 </template>
 
 <style scoped></style>

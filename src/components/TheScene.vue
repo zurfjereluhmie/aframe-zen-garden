@@ -17,7 +17,38 @@ const allAssetsLoaded = ref(false);
         fog="type: linear; color: #a3d0ed; near: 30; far: 60"
         background="color: #a3d0ed;"
     >
-        <a-assets @loaded="allAssetsLoaded = true"></a-assets>
+        <a-assets @loaded="allAssetsLoaded = true">
+            <a-asset-item id="scene" src="./assets/scene.glb"></a-asset-item>
+            <a-asset-item id="shelf" src="./assets/shelf.glb"></a-asset-item>
+            <a-asset-item
+                id="flower-daisy"
+                src="./assets/flowers/daisy-normal.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="flower-sunflower"
+                src="./assets/flowers/sunflower-normal.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="flower-tulip"
+                src="./assets/flowers/tulip-normal.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="tool-pot-small"
+                src="./assets/tools/pots/pot-small.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="tool-pot-big"
+                src="./assets/tools/pots/pot-big.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="tool-pot-high"
+                src="./assets/tools/pots/pot-high.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="tool-lamp"
+                src="./assets/tools/lamp.glb"
+            ></a-asset-item>
+        </a-assets>
 
         <template v-if="allAssetsLoaded">
             <a-entity light="type: ambient; color: #c7fff5"></a-entity>

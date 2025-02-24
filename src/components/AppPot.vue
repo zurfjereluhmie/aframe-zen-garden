@@ -1,6 +1,9 @@
 <script setup>
 import { ref, watch, useTemplateRef } from 'vue';
-const allAssetsLoaded = ref(false);
+import '../aframe/simple-grab.js';
+import '../aframe/clickable.js';
+import '../aframe/bind-position.js';
+import '../aframe/bind-rotation.js';
 
 const props = defineProps({
     position: {
@@ -13,11 +16,6 @@ const props = defineProps({
         validator: (value) => ['small', 'big', 'high'].includes(value),
     },
 });
-
-import '../aframe/simple-grab.js';
-import '../aframe/clickable.js';
-import '../aframe/bind-position.js';
-import '../aframe/bind-rotation.js';
 
 const pot = useTemplateRef('pot');
 const potId = `pot-${Math.random().toString(36).substring(2, 11)}`;
@@ -45,24 +43,16 @@ const undropHandler = (event) => {
 </script>
 
 <template>
-    <a-assets @loaded="allAssetsLoaded = true">
-        <a-asset-item
-            :id="`tool-pot-${type}`"
-            :src="`./assets/tools/pots/pot-${type}.glb`"
-        ></a-asset-item>
-    </a-assets>
-    <template v-if="allAssetsLoaded">
-        <a-gltf-model
-            :position="position"
-            ref="pot"
-            :id="potId"
-            :src="`#tool-pot-${type}`"
-            simple-grab-drop-zone="dropOnly: true;"
-            clickable
-            @drop="handleDrop($event)"
-            @undrop="undropHandler($event)"
-        ></a-gltf-model>
-    </template>
+    <a-gltf-model
+        :position="position"
+        ref="pot"
+        :id="potId"
+        :src="`#tool-pot-${type}`"
+        simple-grab-drop-zone="dropOnly: true;"
+        clickable
+        @drop="handleDrop($event)"
+        @undrop="undropHandler($event)"
+    ></a-gltf-model>
 </template>
 
 <style scoped></style>

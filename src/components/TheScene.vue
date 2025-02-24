@@ -60,13 +60,13 @@ const allAssetsLoaded = ref(false);
             <a-box position="0 0.5 0"></a-box>
             <AppLamp position="2 0 0.15"></AppLamp>
 
-            <AppPot position="-6.274 0.520 -1.498" type="big"></AppPot>
-            <AppPot position="-5.303 0.829 -2.468" type="big"></AppPot>
-            <AppPot position="-5.625 1.855 -2.153" type="big"></AppPot>
-            <AppPot position="-5.625 0.855 -2.153" type="small"></AppPot>
-            <AppPot position="-5.625 0.113 -2.153" type="high"></AppPot>
-
-            <TheShelf position="-5.726 0 -2" rotation="0 45 0"></TheShelf>
+            <TheShelf position="-5.726 0 -2" rotation="0 45 0">
+                <AppPot position="-0.741 0.520 -0.023" type="big"></AppPot>
+                <AppPot position="0.600 0.829 -0.018" type="big"></AppPot>
+                <AppPot position="0.194 1.855 -0.027" type="big"></AppPot>
+                <AppPot position="0.194 0.855 -0.027" type="small"></AppPot>
+                <AppPot position="0.194 0.113 -0.027" type="high"></AppPot>
+            </TheShelf>
 
             <AppFlower position="-1 0 0" flowerName="sunflower"></AppFlower>
             <AppFlower position="1 0 0" flowerName="daisy"></AppFlower>

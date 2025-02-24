@@ -1,4 +1,6 @@
 <script setup>
+import AppPot from './AppPot.vue';
+
 defineProps({
     position: {
         type: String,
@@ -19,6 +21,7 @@ defineProps({
         src="#shelf"
         scale="1 1 1"
     >
+        <slot></slot>
     </a-gltf-model>
 </template>
 

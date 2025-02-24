@@ -2,10 +2,15 @@
 import { ref, watch, useTemplateRef } from 'vue';
 const allAssetsLoaded = ref(false);
 
-defineProps({
+const props = defineProps({
     position: {
         type: String,
         default: '0 0 0',
+    },
+    type: {
+        type: String,
+        default: 'small',
+        validator: (value) => ['small', 'big', 'high'].includes(value),
     },
 });
 
@@ -42,12 +47,8 @@ const undropHandler = (event) => {
 <template>
     <a-assets @loaded="allAssetsLoaded = true">
         <a-asset-item
-            id="tool-pot"
-            src="./assets/tools/pot-normal.glb"
-        ></a-asset-item>
-        <a-asset-item
-            id="tool-pot-dirt"
-            src="./assets/tools/pot-normal-dirt.glb"
+            :id="`tool-pot-${type}`"
+            :src="`./assets/tools/pots/pot-${type}.glb`"
         ></a-asset-item>
     </a-assets>
     <template v-if="allAssetsLoaded">
@@ -55,8 +56,7 @@ const undropHandler = (event) => {
             :position="position"
             ref="pot"
             :id="potId"
-            src="#tool-pot"
-            scale="1.1 1.1 1.1"
+            :src="`#tool-pot-${type}`"
             simple-grab-drop-zone="dropOnly: true;"
             clickable
             @drop="handleDrop($event)"

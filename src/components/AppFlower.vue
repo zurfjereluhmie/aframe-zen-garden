@@ -13,19 +13,18 @@ const props = defineProps({
     },
 });
 
-// TODO: Some flowers have bad origin, create an offset for them, adding it to the position
 const flowers = {
     daisy: {
         src: './assets/flowers/daisy-normal.glb',
-        scale: '0.2 0.2 0.2',
+        scale: '0.15 0.15 0.15',
     },
     sunflower: {
         src: './assets/flowers/sunflower-normal.glb',
-        scale: '0.5 0.5 0.5',
+        scale: '0.3 0.3 0.3',
     },
     tulip: {
         src: './assets/flowers/tulip-normal.glb',
-        scale: '1 1 1',
+        scale: '0.5 0.5 0.5',
     },
 };
 
@@ -33,7 +32,7 @@ import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/event-set.js';
 
-const flowerId = `pot-${Math.random().toString(36).substring(2, 9)}`;
+const flowerId = `flower-${Math.random().toString(36).substring(2, 9)}`;
 </script>
 
 <template>
@@ -51,8 +50,6 @@ const flowerId = `pot-${Math.random().toString(36).substring(2, 9)}`;
             simple-grab
             clickable
             :scale="flowers[flowerName].scale"
-            event-set__grab="event: grab; attribute: scale; value: 0.15 0.15 0.15"
-            :event-set__ungrab="`event: drop; attribute: scale; value: ${flowers[flowerName].scale}`"
         ></a-gltf-model>
     </template>
 </template>

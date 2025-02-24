@@ -3,8 +3,10 @@ import { ref } from 'vue';
 import TheCameraRig from './TheCameraRig.vue';
 
 import TheFloor from './TheFloor.vue';
+import AppPot from './AppPot.vue';
 import AppFlower from './AppFlower.vue';
 import AppLamp from './AppLamp.vue';
+import TheShelf from './TheShelf.vue';
 
 const allAssetsLoaded = ref(false);
 </script>
@@ -27,9 +29,17 @@ const allAssetsLoaded = ref(false);
             <a-box position="0 0.5 0"></a-box>
             <AppLamp position="2 0 0.15"></AppLamp>
 
-            <AppFlower position="0 0 -2" flowerName="sunflower"></AppFlower>
-            <AppFlower position="0 0 -10" flowerName="daisy"></AppFlower>
-            <AppFlower position="0 0 -10" flowerName="tulip"></AppFlower>
+            <AppPot position="-6.274 0.520 -1.498" type="big"></AppPot>
+            <AppPot position="-5.303 0.829 -2.468" type="big"></AppPot>
+            <AppPot position="-5.625 1.855 -2.153" type="big"></AppPot>
+            <AppPot position="-5.625 0.855 -2.153" type="small"></AppPot>
+            <AppPot position="-5.625 0.113 -2.153" type="high"></AppPot>
+
+            <TheShelf position="-5.726 0 -2" rotation="0 45 0"></TheShelf>
+
+            <AppFlower position="-1 0 0" flowerName="sunflower"></AppFlower>
+            <AppFlower position="1 0 0" flowerName="daisy"></AppFlower>
+            <AppFlower position="2 0 0" flowerName="tulip"></AppFlower>
             <TheFloor />
         </template>
 

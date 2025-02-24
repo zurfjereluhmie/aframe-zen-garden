@@ -7,6 +7,7 @@ import AppPot from './AppPot.vue';
 import AppFlower from './AppFlower.vue';
 import AppLamp from './AppLamp.vue';
 import TheShelf from './TheShelf.vue';
+import TheRiver from './TheRiver.vue';
 
 const allAssetsLoaded = ref(false);
 </script>
@@ -18,7 +19,19 @@ const allAssetsLoaded = ref(false);
         background="color: #a3d0ed;"
     >
         <a-assets @loaded="allAssetsLoaded = true">
+            <!-- SOUNDS -->
+            <audio id="river-sound" src="./assets/sounds/sfx-water.mp3"></audio>
+
+            <!-- MODELS -->
             <a-asset-item id="scene" src="./assets/scene.glb"></a-asset-item>
+            <a-asset-item
+                id="river-border-left"
+                src="./assets/decorations/river-border-left.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="river-border-right"
+                src="./assets/decorations/river-border-right.glb"
+            ></a-asset-item>
             <a-asset-item id="shelf" src="./assets/shelf.glb"></a-asset-item>
             <a-asset-item
                 id="flower-daisy"
@@ -51,14 +64,13 @@ const allAssetsLoaded = ref(false);
         </a-assets>
 
         <template v-if="allAssetsLoaded">
-            <a-entity light="type: ambient; color: #c7fff5"></a-entity>
             <a-entity
-                light="type: point; intensity: 2"
-                position="0 0 -10"
+                light="type: ambient; color: #fff; intensity: 2.7"
             ></a-entity>
-
-            <a-box position="0 0.5 0"></a-box>
-            <AppLamp position="2 0 0.15"></AppLamp>
+            <a-entity
+                light="type: directional; intensity: 2"
+                position="0 3.653 2.119"
+            ></a-entity>
 
             <TheShelf position="-5.726 0 -2" rotation="0 45 0">
                 <AppPot position="-0.741 0.520 -0.023" type="big"></AppPot>
@@ -68,9 +80,16 @@ const allAssetsLoaded = ref(false);
                 <AppPot position="0.194 0.113 -0.027" type="high"></AppPot>
             </TheShelf>
 
-            <AppFlower position="-1 0 0" flowerName="sunflower"></AppFlower>
-            <AppFlower position="1 0 0" flowerName="daisy"></AppFlower>
-            <AppFlower position="2 0 0" flowerName="tulip"></AppFlower>
+            <TheRiver position="0 0.2 0"></TheRiver>
+
+            <a-entity id="debug-items" position="0 10 0">
+                <a-box position="0 0.5 0"></a-box>
+                <AppLamp position="2 0 0.15"></AppLamp>
+                <AppFlower position="-1 0 0" flowerName="sunflower"></AppFlower>
+                <AppFlower position="1 0 0" flowerName="daisy"></AppFlower>
+                <AppFlower position="2 0 0" flowerName="tulip"></AppFlower>
+            </a-entity>
+
             <TheFloor />
         </template>
 

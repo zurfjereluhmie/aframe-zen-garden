@@ -8,6 +8,7 @@ import AppFlower from './AppFlower.vue';
 import AppLamp from './AppLamp.vue';
 import TheShelf from './TheShelf.vue';
 import TheRiver from './TheRiver.vue';
+import TheMarket from './TheMarket.vue';
 
 import '../aframe/outline.js';
 
@@ -27,6 +28,7 @@ const allAssetsLoaded = ref(false);
 
             <!-- MODELS -->
             <a-asset-item id="scene" src="./assets/scene.glb"></a-asset-item>
+            <a-asset-item id="market" src="./assets/market.glb"></a-asset-item>
             <a-asset-item
                 id="river-border-left"
                 src="./assets/decorations/river-border-left.glb"
@@ -84,6 +86,8 @@ const allAssetsLoaded = ref(false);
             </TheShelf>
 
             <TheRiver position="0 0.2 0"></TheRiver>
+
+            <TheMarket position="0 0 -5" rotation="0 180 0"></TheMarket>
 
             <a-entity id="debug-items" position="0 0 0">
                 <AppPot position="0 1 0" type="high"></AppPot>

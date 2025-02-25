@@ -46,7 +46,7 @@ const allAssetsLoaded = ref(false);
             <a-asset-item id="shelf" src="./assets/shelf.glb"></a-asset-item>
             <a-asset-item
                 id="planting-zone"
-                src="./assets/planting-zone.glb"
+                src="./assets/fertile-soil.glb"
             ></a-asset-item>
             <a-asset-item
                 id="flower-daisy"
@@ -71,6 +71,18 @@ const allAssetsLoaded = ref(false);
             <a-asset-item
                 id="flower-tulip-seeds"
                 src="./assets/flowers/seed-pack-tulip.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="seeding-process-step-1"
+                src="./assets/seeding-process/step-1.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="seeding-process-step-2"
+                src="./assets/seeding-process/step-2.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="seeding-process-step-3"
+                src="./assets/seeding-process/step-3.glb"
             ></a-asset-item>
             <a-asset-item
                 id="tool-pot-small"

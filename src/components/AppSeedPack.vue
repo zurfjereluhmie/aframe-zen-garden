@@ -33,6 +33,7 @@ const packId = `seed-pack-${Math.random().toString(36).substring(2, 9)}`;
         clickable
         geometry="primitive: box; width: 0.13; height: 0.04; depth: 0.23"
         material="visible: false;"
+        :data-seed-type="type"
         @grab="() => store.setCarryItem('seedPack', { packId })"
     >
         <a-gltf-model

@@ -47,6 +47,7 @@ const handleDrop = (event) => {
     });
     droppedEl.value.setAttribute('bind-rotation', {
         target: `#${potId} .dropbox`,
+        convertToLocal: true,
     });
 
     setTimeout(() => {

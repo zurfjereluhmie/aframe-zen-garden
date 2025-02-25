@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted, useTemplateRef } from 'vue';
+import { ref, onMounted, useTemplateRef, watch } from 'vue';
+import { store } from '../stores/carryStore.js';
 import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/outline.js';
@@ -21,6 +22,7 @@ const placeholderId = `pot-placeholder-${Math.random().toString(36).substring(2,
 const placeholder = useTemplateRef('placeholder');
 
 const handleDrop = (event) => {
+    store.clearCarryItem();
     droppedEl.value = event.detail.el;
 
     window.dispatchEvent(
@@ -32,17 +34,24 @@ const handleDrop = (event) => {
 
 const handleUndrop = (event) => {};
 
-onMounted(() => {
-    window.addEventListener('pot-grabbed', (event) => {
-        placeholder.value.setAttribute('clickable', '');
-        placeholder.value.setAttribute('simple-grab-drop-zone', '');
-    });
+watch(
+    () => store.getCarryItem(),
+    (newCarryItem) => {
+        if (!newCarryItem) {
+            if (store.getPreviousCarryItem().itemName === 'pot') {
+                placeholder.value.removeAttribute('clickable');
+                placeholder.value.removeAttribute('simple-grab-drop-zone');
+            }
+            return;
+        }
 
-    window.addEventListener('pot-dropped', (event) => {
-        placeholder.value.removeAttribute('clickable');
-        placeholder.value.removeAttribute('simple-grab-drop-zone');
-    });
-});
+        if (newCarryItem.itemName === 'pot') {
+            placeholder.value.setAttribute('clickable', '');
+            placeholder.value.setAttribute('simple-grab-drop-zone', '');
+            return;
+        }
+    }
+);
 </script>
 
 <template>

@@ -1,5 +1,6 @@
 <script setup>
-import { ref, watch, useTemplateRef, onMounted } from 'vue';
+import { ref, watch, useTemplateRef } from 'vue';
+import { store } from '../stores/carryStore.js';
 import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/bind-position.js';
@@ -39,6 +40,8 @@ const potMeta = {
 };
 
 const handleDrop = (event) => {
+    store.clearCarryItem();
+
     droppedEl.value = event.detail.el;
     droppedEl.value.removeAttribute('clickable');
 
@@ -61,28 +64,39 @@ const undropHandler = (event) => {
 };
 
 const handleGrab = (event) => {
-    window.dispatchEvent(
-        new CustomEvent('pot-grabbed', {
-            detail: { pot: outerHitbox.value, droppedEl: droppedEl.value },
-        })
-    );
+    store.setCarryItem('pot', {
+        pot: outerHitbox.value,
+        droppedEl: droppedEl.value,
+    });
 };
 
-onMounted(() => {
-    window.addEventListener('pot-grabbed', (event) => {
-        if (potId !== event.detail.pot.id) {
+watch(
+    () => store.getCarryItem(),
+    (newCarryItem) => {
+        if (
+            (!newCarryItem && !droppedEl.value) ||
+            newCarryItem?.itemName === 'flower'
+        ) {
+            pot.value?.setAttribute('simple-grab-drop-zone', 'dropOnly: true;');
+            pot.value?.setAttribute('clickable', '');
+            return;
+        }
+
+        if (newCarryItem?.itemName !== 'flower') {
+            console.log('not a flower');
+
+            pot.value?.removeAttribute('simple-grab-drop-zone');
+            pot.value?.removeAttribute('clickable');
+            return;
+        }
+
+        if (newCarryItem?.itemName !== 'pot') return;
+        if (newCarryItem && newCarryItem.details.pot.id !== potId) {
             pot.value.removeAttribute('simple-grab-drop-zone');
             pot.value.removeAttribute('clickable');
         }
-    });
-
-    window.addEventListener('pot-dropped', (event) => {
-        if (potId !== event.detail.pot.id && droppedEl.value === null) {
-            pot.value.setAttribute('simple-grab-drop-zone', 'dropOnly: true;');
-            pot.value.setAttribute('clickable', '');
-        }
-    });
-});
+    }
+);
 </script>
 
 <template>

@@ -1,4 +1,5 @@
 <script setup>
+import { store } from '../stores/carryStore.js';
 import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/event-set.js';
@@ -32,6 +33,7 @@ const packId = `seed-pack-${Math.random().toString(36).substring(2, 9)}`;
         clickable
         geometry="primitive: box; width: 0.13; height: 0.04; depth: 0.23"
         material="visible: false;"
+        @grab="() => store.setCarryItem('seedPack', { packId })"
     >
         <a-gltf-model
             :src="`#flower-${type}-seeds`"

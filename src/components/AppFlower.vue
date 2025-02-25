@@ -3,7 +3,8 @@ import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/event-set.js';
 import '../aframe/listen-to.js';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, watch } from 'vue';
+import { store } from '../stores/carryStore.js';
 
 const props = defineProps({
     flowerName: {
@@ -39,18 +40,29 @@ const hitboxPosition = computed(() => {
     return `${x} ${y + 0.25} ${z}`;
 });
 
-onMounted(() => {
-    const self = document.getElementById(flowerId);
-    window.addEventListener('pot-grabbed', (event) => {
-        // self.removeAttribute('simple-grab');
-        // self.removeAttribute('clickable');
-    });
+const handleGrab = (event) => {
+    store.clearCarryItem();
+    store.setCarryItem('flower', { flowerId });
+};
 
-    window.addEventListener('pot-dropped', (event) => {
-        // self.setAttribute('simple-grab', '');
-        // self.setAttribute('clickable', '');
-    });
-});
+watch(
+    () => store.getCarryItem(),
+    (newCarryItem) => {
+        if (!newCarryItem && store.getPreviousCarryItem().itemName === 'pot') {
+            const self = document.getElementById(flowerId);
+            self.setAttribute('simple-grab', '');
+            self.setAttribute('clickable', '');
+        }
+
+        if (newCarryItem?.itemName === 'pot') {
+            const self = document.getElementById(flowerId);
+            console.log('self', self);
+
+            self.removeAttribute('simple-grab');
+            self.removeAttribute('clickable');
+        }
+    }
+);
 </script>
 
 <template>
@@ -61,6 +73,7 @@ onMounted(() => {
         :position="hitboxPosition"
         :geometry="`primitive: box; ${flowers[flowerName].hitbox}`"
         material="visible: false;"
+        @grab="handleGrab($event)"
     >
         <a-gltf-model
             :src="`#flower-${flowerName}`"

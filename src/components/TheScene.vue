@@ -12,6 +12,7 @@ import TheMarket from './TheMarket.vue';
 
 import '../aframe/outline.js';
 import TheBackPack from './TheBackPack.vue';
+import AppPlantingZone from './AppPlantingZone.vue';
 
 const allAssetsLoaded = ref(false);
 </script>
@@ -43,6 +44,10 @@ const allAssetsLoaded = ref(false);
                 src="./assets/decorations/river-border-right.glb"
             ></a-asset-item>
             <a-asset-item id="shelf" src="./assets/shelf.glb"></a-asset-item>
+            <a-asset-item
+                id="planting-zone"
+                src="./assets/planting-zone.glb"
+            ></a-asset-item>
             <a-asset-item
                 id="flower-daisy"
                 src="./assets/flowers/daisy-normal.glb"
@@ -107,6 +112,10 @@ const allAssetsLoaded = ref(false);
             <TheMarket position="0 0 -5" rotation="0 180 0"></TheMarket>
 
             <TheBackPack position="1.5 0.68 -5"></TheBackPack>
+
+            <AppPlantingZone position="-5 0 6"></AppPlantingZone>
+            <AppPlantingZone position="-5 0 7"></AppPlantingZone>
+            <AppPlantingZone position="-5 0 8"></AppPlantingZone>
 
             <a-entity id="debug-items" position="0 0 0">
                 <AppPot position="0 1 0" type="high"></AppPot>

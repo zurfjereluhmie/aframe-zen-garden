@@ -43,12 +43,24 @@ const allAssetsLoaded = ref(false);
                 src="./assets/flowers/daisy-normal.glb"
             ></a-asset-item>
             <a-asset-item
+                id="flower-daisy-seeds"
+                src="./assets/flowers/seed-pack-daisy.glb"
+            ></a-asset-item>
+            <a-asset-item
                 id="flower-sunflower"
                 src="./assets/flowers/sunflower-normal.glb"
             ></a-asset-item>
             <a-asset-item
+                id="flower-sunflower-seeds"
+                src="./assets/flowers/seed-pack-sunflower.glb"
+            ></a-asset-item>
+            <a-asset-item
                 id="flower-tulip"
                 src="./assets/flowers/tulip-normal.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="flower-tulip-seeds"
+                src="./assets/flowers/seed-pack-tulip.glb"
             ></a-asset-item>
             <a-asset-item
                 id="tool-pot-small"

@@ -11,6 +11,7 @@ import TheRiver from './TheRiver.vue';
 import TheMarket from './TheMarket.vue';
 
 import '../aframe/outline.js';
+import TheBackPack from './TheBackPack.vue';
 
 const allAssetsLoaded = ref(false);
 </script>
@@ -29,6 +30,10 @@ const allAssetsLoaded = ref(false);
             <!-- MODELS -->
             <a-asset-item id="scene" src="./assets/scene.glb"></a-asset-item>
             <a-asset-item id="market" src="./assets/market.glb"></a-asset-item>
+            <a-asset-item
+                id="backpack"
+                src="./assets/tools/backpack.glb"
+            ></a-asset-item>
             <a-asset-item
                 id="river-border-left"
                 src="./assets/decorations/river-border-left.glb"
@@ -100,6 +105,8 @@ const allAssetsLoaded = ref(false);
             <TheRiver position="0 0.2 0"></TheRiver>
 
             <TheMarket position="0 0 -5" rotation="0 180 0"></TheMarket>
+
+            <TheBackPack position="1.5 0.68 -5"></TheBackPack>
 
             <a-entity id="debug-items" position="0 0 0">
                 <AppPot position="0 1 0" type="high"></AppPot>

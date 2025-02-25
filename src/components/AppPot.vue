@@ -1,9 +1,10 @@
 <script setup>
-import { ref, watch, useTemplateRef } from 'vue';
+import { ref, watch, useTemplateRef, onMounted } from 'vue';
 import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/bind-position.js';
 import '../aframe/bind-rotation.js';
+import '../aframe/listen-to.js';
 
 const props = defineProps({
     position: {
@@ -18,41 +19,98 @@ const props = defineProps({
 });
 
 const pot = useTemplateRef('pot');
+const outerHitbox = useTemplateRef('outerHitbox');
 const potId = `pot-${Math.random().toString(36).substring(2, 11)}`;
 const droppedEl = ref(null);
 
-watch(droppedEl, () => {}, { deep: true });
+const potMeta = {
+    small: {
+        dropbox: '0 0.3 0',
+        hitbox: 'width: 0.2; height: 0.28; depth: 0.2',
+    },
+    big: {
+        dropbox: '0 0.45 0',
+        hitbox: 'width: 0.3; height: 0.6; depth: 0.3',
+    },
+    high: {
+        dropbox: '0 0.35 0',
+        hitbox: 'width: 0.2; height: 0.4; depth: 0.2',
+    },
+};
 
 const handleDrop = (event) => {
     droppedEl.value = event.detail.el;
-    droppedEl.value.setAttribute('id', 'droppedEl');
-    pot.value.setAttribute('simple-grab', '');
-    droppedEl.value.setAttribute('bind-position', { target: `#${potId}` });
-    droppedEl.value.setAttribute('bind-rotation', { target: `#${potId}` });
+    droppedEl.value.removeAttribute('clickable');
+
+    droppedEl.value.setAttribute('bind-position', {
+        target: `#${potId} .dropbox`,
+    });
+    droppedEl.value.setAttribute('bind-rotation', {
+        target: `#${potId} .dropbox`,
+    });
+
+    setTimeout(() => {
+        outerHitbox.value.setAttribute('simple-grab', '');
+        outerHitbox.value.setAttribute('clickable', '');
+    }, 1);
 };
 
 const undropHandler = (event) => {
-    console.log('undropHandler', event);
-
-    pot.value.removeAttribute('id');
-    pot.value.removeAttribute('simple-grab');
-    droppedEl.value.removeAttribute('bind-position');
-    droppedEl.value.removeAttribute('bind-rotation');
     droppedEl.value = null;
 };
+
+const handleGrab = (event) => {
+    window.dispatchEvent(
+        new CustomEvent('pot-grabbed', {
+            detail: { pot: outerHitbox.value, droppedEl: droppedEl.value },
+        })
+    );
+};
+
+onMounted(() => {
+    window.addEventListener('pot-grabbed', (event) => {
+        if (potId !== event.detail.pot.id) {
+            pot.value.removeAttribute('simple-grab-drop-zone');
+            pot.value.removeAttribute('clickable');
+        }
+    });
+
+    window.addEventListener('pot-dropped', (event) => {
+        if (potId !== event.detail.pot.id && droppedEl.value === null) {
+            pot.value.setAttribute('simple-grab-drop-zone', 'dropOnly: true;');
+            pot.value.setAttribute('clickable', '');
+        }
+    });
+});
 </script>
 
 <template>
-    <a-gltf-model
+    <a-entity
+        ref="outerHitbox"
+        :geometry="`primitive: box; ${potMeta[type].hitbox}`"
+        material="visible: false;"
         :position="position"
-        ref="pot"
         :id="potId"
-        :src="`#tool-pot-${type}`"
-        simple-grab-drop-zone="dropOnly: true;"
-        clickable
-        @drop="handleDrop($event)"
-        @undrop="undropHandler($event)"
-    ></a-gltf-model>
+        @grab="handleGrab($event)"
+    >
+        <a-gltf-model
+            ref="pot"
+            :src="`#tool-pot-${type}`"
+            simple-grab-drop-zone="dropOnly: true;"
+            clickable
+            @drop="handleDrop($event)"
+            @undrop="undropHandler($event)"
+            :listen-to__grab="`target: #${potId}; event: grab; emit: taken`"
+            :listen-to__drop="`target: #${potId}; event: drop; emit: untaken`"
+            event-set__taken_rotation="event: taken; attribute: rotation; value: -90 0 0"
+            event-set__untaken_rotation="event: untaken; attribute: rotation; value: 0 0 0"
+        >
+            <a-entity
+                class="dropbox"
+                :position="potMeta[type].dropbox"
+            ></a-entity>
+        </a-gltf-model>
+    </a-entity>
 </template>
 
 <style scoped></style>

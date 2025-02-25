@@ -9,6 +9,8 @@ import AppLamp from './AppLamp.vue';
 import TheShelf from './TheShelf.vue';
 import TheRiver from './TheRiver.vue';
 
+import '../aframe/outline.js';
+
 const allAssetsLoaded = ref(false);
 </script>
 
@@ -17,6 +19,7 @@ const allAssetsLoaded = ref(false);
         stats
         fog="type: linear; color: #a3d0ed; near: 30; far: 60"
         background="color: #a3d0ed;"
+        outline="color: red; strength: 20"
     >
         <a-assets @loaded="allAssetsLoaded = true">
             <!-- SOUNDS -->
@@ -83,7 +86,8 @@ const allAssetsLoaded = ref(false);
             <TheRiver position="0 0.2 0"></TheRiver>
 
             <a-entity id="debug-items" position="0 0 0">
-                <a-box position="0 0.5 0"></a-box>
+                <AppPot position="0 1 0" type="high"></AppPot>
+                <!-- <a-box position="0 0.5 0"></a-box> -->
                 <AppLamp position="2 0 0.15"></AppLamp>
                 <AppFlower position="-1 0 0" flowerName="sunflower"></AppFlower>
                 <AppFlower position="1 0 0" flowerName="daisy"></AppFlower>

@@ -3,7 +3,7 @@ import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/event-set.js';
 import '../aframe/listen-to.js';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 
 const props = defineProps({
     flowerName: {
@@ -37,6 +37,19 @@ const hitboxPosition = computed(() => {
         .split(' ')
         .map((coord) => parseFloat(coord));
     return `${x} ${y + 0.25} ${z}`;
+});
+
+onMounted(() => {
+    const self = document.getElementById(flowerId);
+    window.addEventListener('pot-grabbed', (event) => {
+        // self.removeAttribute('simple-grab');
+        // self.removeAttribute('clickable');
+    });
+
+    window.addEventListener('pot-dropped', (event) => {
+        // self.setAttribute('simple-grab', '');
+        // self.setAttribute('clickable', '');
+    });
 });
 </script>
 

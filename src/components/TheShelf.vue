@@ -1,5 +1,5 @@
 <script setup>
-import AppPot from './AppPot.vue';
+import AppPotPlaceholder from './AppPotPlaceholder.vue';
 
 defineProps({
     position: {
@@ -22,6 +22,8 @@ defineProps({
         scale="1 1 1"
     >
         <slot></slot>
+        <AppPotPlaceholder position="-0.278 1.381 -0.031"></AppPotPlaceholder>
+        <AppPotPlaceholder position="-0.278 0.831 -0.031"></AppPotPlaceholder>
     </a-gltf-model>
 </template>
 

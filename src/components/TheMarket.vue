@@ -17,6 +17,7 @@ const packCount = 4;
 
 <template>
     <a-gltf-model src="#market" :position :rotation>
+        <slot></slot>
         <template v-for="(position, index) in packCount" :key="index">
             <AppSeedPack
                 type="sunflower"

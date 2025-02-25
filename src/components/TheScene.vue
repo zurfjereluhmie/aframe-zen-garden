@@ -13,12 +13,14 @@ import TheMarket from './TheMarket.vue';
 import '../aframe/outline.js';
 import TheBackPack from './TheBackPack.vue';
 import AppPlantingZone from './AppPlantingZone.vue';
+import TheWaterCan from './TheWaterCan.vue';
 
 const allAssetsLoaded = ref(false);
 </script>
 
 <template>
     <a-scene
+        obb-collider="showColliders: true"
         stats
         fog="type: linear; color: #a3d0ed; near: 30; far: 60"
         background="color: #a3d0ed;"
@@ -27,6 +29,18 @@ const allAssetsLoaded = ref(false);
         <a-assets @loaded="allAssetsLoaded = true">
             <!-- SOUNDS -->
             <audio id="river-sound" src="./assets/sounds/sfx-water.mp3"></audio>
+            <audio
+                id="watercan-fill-sound"
+                src="./assets/sounds/sfx-filling-watercan.mp3"
+            ></audio>
+            <audio
+                id="pouring-water-sound"
+                src="./assets/sounds/sfx-pouring-water.mp3"
+            ></audio>
+            <audio
+                id="walking-with-watercan-full-sound"
+                src="./assets/sounds/sfx-walking-watercan-full.mp3"
+            ></audio>
 
             <!-- MODELS -->
             <a-asset-item id="scene" src="./assets/scene.glb"></a-asset-item>
@@ -100,6 +114,10 @@ const allAssetsLoaded = ref(false);
                 id="tool-lamp"
                 src="./assets/tools/lamp.glb"
             ></a-asset-item>
+            <a-asset-item
+                id="tool-water-can"
+                src="./assets/tools/water-can.glb"
+            ></a-asset-item>
         </a-assets>
 
         <template v-if="allAssetsLoaded">
@@ -121,9 +139,14 @@ const allAssetsLoaded = ref(false);
 
             <TheRiver position="0 0.2 0"></TheRiver>
 
-            <TheMarket position="0 0 -5" rotation="0 180 0"></TheMarket>
+            <TheMarket position="0 0 -5" rotation="0 180 0">
+                <TheWaterCan
+                    position="-1.5 0.9 0"
+                    rotation="0 -180 0"
+                ></TheWaterCan>
+            </TheMarket>
 
-            <TheBackPack position="1.5 0.68 -5"></TheBackPack>
+            <TheBackPack position="0 0 -5"></TheBackPack>
 
             <AppPlantingZone position="-5 0 6"></AppPlantingZone>
             <AppPlantingZone position="-5 0 7"></AppPlantingZone>

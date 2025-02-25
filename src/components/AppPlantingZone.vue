@@ -44,7 +44,7 @@ watch(
             return;
         }
 
-        if (newCarryItem?.itemName === 'wateringCan') {
+        if (newCarryItem?.itemName === 'waterCan') {
             model.value.querySelectorAll('a-box').forEach((zone, i) => {
                 if (zones.value[i]) {
                     zone.setAttribute('clickable', '');

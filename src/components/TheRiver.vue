@@ -1,4 +1,6 @@
 <script setup>
+import { onMounted, ref } from 'vue';
+
 defineProps({
     position: {
         type: String,
@@ -8,6 +10,14 @@ defineProps({
         type: String,
         default: '0 0 0',
     },
+});
+
+const hitboxPosition = ref('8.5 1 6');
+onMounted(() => {
+    document.querySelector('a-scene').addEventListener('enter-vr', () => {
+        console.log('entering VR');
+        hitboxPosition.value = '8 -0.2 6';
+    });
 });
 </script>
 
@@ -24,6 +34,15 @@ defineProps({
             src="#river-border-left"
             position="0 -0.15 0"
         ></a-gltf-model>
+        <a-box
+            id="river-hitbox"
+            obb-collider
+            :position="hitboxPosition"
+            rotation="0 -35 0"
+            scale="1 1 13"
+            width="1"
+            depth="1"
+        ></a-box>
         <a-ocean
             position="11.574 0 3.066"
             rotation="-90 147.711 0"

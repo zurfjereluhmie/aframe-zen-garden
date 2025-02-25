@@ -37,7 +37,7 @@ watch(
     (newCarryItem) => {
         if (newCarryItem?.itemName === 'seedPack') {
             model.value.querySelectorAll('a-box').forEach((zone, i) => {
-                // TODO: If a zone has a seed, don't allow to plant another seed
+                if (zones.value[i]) return;
                 zone.setAttribute('clickable', '');
                 zone.setAttribute('simple-grab-drop-zone', 'dropOnly: true;');
             });
@@ -45,11 +45,13 @@ watch(
         }
 
         if (newCarryItem?.itemName === 'waterCan') {
+            if (!newCarryItem.details.isFull) return;
+
             model.value.querySelectorAll('a-box').forEach((zone, i) => {
-                if (zones.value[i]) {
-                    zone.setAttribute('clickable', '');
-                    // TODO: Set the click logic for watering the plant
-                }
+                if (!zones.value[i]) return;
+
+                zone.setAttribute('clickable', '');
+                // TODO: Set the click logic for watering the plant
             });
             return;
         }
@@ -78,7 +80,7 @@ watch(
                 opacity="0.5"
                 outline-on-event
                 material="opacity: 0"
-                @drop="handleDrop($event, { index: i })"
+                @drop="handleDrop($event, { index: i - 1 })"
             >
                 <template v-if="zones[i]">
                     <a-gltf-model

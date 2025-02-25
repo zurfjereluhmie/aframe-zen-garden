@@ -40,6 +40,10 @@ const handleCollision = (event, type) => {
 const fillingComplete = (event) => {
     isFull.value = true;
     fillingSfx.value.components.sound.stopSound();
+    setTimeout(() => {
+        store.clearCarryItem();
+        store.setCarryItem('waterCan', { isFull: isFull.value });
+    }, 1);
 };
 
 watch(
@@ -66,7 +70,7 @@ watch(
         material="visible: false;"
         clickable
         simple-grab
-        @grab="() => store.setCarryItem('waterCan')"
+        @grab="() => store.setCarryItem('waterCan', { isFull })"
     >
         <a-sound
             ref="filling-sfx"

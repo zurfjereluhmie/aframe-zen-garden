@@ -82,7 +82,7 @@ const allAssetsLoaded = ref(false);
 
             <TheRiver position="0 0.2 0"></TheRiver>
 
-            <a-entity id="debug-items" position="0 10 0">
+            <a-entity id="debug-items" position="0 0 0">
                 <a-box position="0 0.5 0"></a-box>
                 <AppLamp position="2 0 0.15"></AppLamp>
                 <AppFlower position="-1 0 0" flowerName="sunflower"></AppFlower>

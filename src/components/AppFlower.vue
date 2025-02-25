@@ -2,6 +2,7 @@
 import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/event-set.js';
+import '../aframe/listen-to.js';
 
 const props = defineProps({
     flowerName: {
@@ -30,14 +31,23 @@ const flowerId = `flower-${Math.random().toString(36).substring(2, 9)}`;
 </script>
 
 <template>
-    <a-gltf-model
-        :position="position"
-        :id="flowerId"
-        :src="`#flower-${flowerName}`"
+    <a-entity
         simple-grab
         clickable
-        :scale="flowers[flowerName].scale"
-    ></a-gltf-model>
+        :id="flowerId"
+        :position="position"
+        geometry="primitive: box; width: 0.5; height: 1.5; depth: 0.3"
+        material="visible: false"
+    >
+        <a-gltf-model
+            :src="`#flower-${flowerName}`"
+            :scale="flowers[flowerName].scale"
+            :listen-to__grab="`target: #${flowerId}; event: grab; emit: taken`"
+            :listen-to__drop="`target: #${flowerId}; event: drop; emit: untaken`"
+            event-set__taken="event: taken; attribute: rotation; value: -90 0 0"
+            event-set__untaken="event: untaken; attribute: rotation; value: 0 0 0"
+        ></a-gltf-model>
+    </a-entity>
 </template>
 
 <style scoped></style>

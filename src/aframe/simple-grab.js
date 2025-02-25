@@ -184,11 +184,11 @@ AFRAME.registerComponent('simple-grab-drop-zone', {
             this.system.removeCurrentGrab(this.grabbedBy, currentGrab, this.el);
             copyPosition(this.el, currentGrab);
             copyRotation(this.el, currentGrab, true);
-            if (this.data.dropOnly) currentGrab.removeAttribute('simple-grab');
+            if (this.data?.dropOnly) currentGrab.removeAttribute('simple-grab');
         }
 
         // if something was already in there, put it in the hand
-        if (!this.data.dropOnly && this.droppedEl !== null) {
+        if (!this.data?.dropOnly && this.droppedEl !== null) {
             this.system.setCurrentGrab(this.grabbedBy, this.droppedEl);
             this.droppedEl.components['simple-grab'].grabbedBy = this.grabbedBy;
             this.droppedEl.components['simple-grab'].actualDropZone = null;

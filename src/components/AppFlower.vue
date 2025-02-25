@@ -48,16 +48,13 @@ const handleGrab = (event) => {
 watch(
     () => store.getCarryItem(),
     (newCarryItem) => {
+        const self = document.getElementById(flowerId);
         if (!newCarryItem && store.getPreviousCarryItem().itemName === 'pot') {
-            const self = document.getElementById(flowerId);
             self.setAttribute('simple-grab', '');
             self.setAttribute('clickable', '');
         }
 
         if (newCarryItem?.itemName === 'pot') {
-            const self = document.getElementById(flowerId);
-            console.log('self', self);
-
             self.removeAttribute('simple-grab');
             self.removeAttribute('clickable');
         }

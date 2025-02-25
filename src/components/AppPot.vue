@@ -73,18 +73,15 @@ const handleGrab = (event) => {
 watch(
     () => store.getCarryItem(),
     (newCarryItem) => {
-        if (
-            (!newCarryItem && !droppedEl.value) ||
-            newCarryItem?.itemName === 'flower'
-        ) {
+        if (newCarryItem?.itemName === 'flower' && !droppedEl.value) {
+            console.log(droppedEl.value);
+
             pot.value?.setAttribute('simple-grab-drop-zone', 'dropOnly: true;');
             pot.value?.setAttribute('clickable', '');
             return;
         }
 
         if (newCarryItem?.itemName !== 'flower') {
-            console.log('not a flower');
-
             pot.value?.removeAttribute('simple-grab-drop-zone');
             pot.value?.removeAttribute('clickable');
             return;

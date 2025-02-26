@@ -22,7 +22,7 @@ function enterScene() {
 <template>
     <div id="onboarding" v-if="showOnboarding">
         <div>
-            <h1>A-Frame + Vite + Vue Boilerplate</h1>
+            <h1>GreenGrow</h1>
             <p v-if="!loaded">loading...</p>
             <button v-if="loaded" @click="enterScene()">Enter scene</button>
             <div class="licences">
@@ -47,7 +47,7 @@ function enterScene() {
                     <h4>Source code</h4>
                     <blockquote>
                         <a
-                            href="https://github.com/Chabloz/a-frame-vite-vue-boilerplate"
+                            href="https://github.com/zurfjereluhmie/aframe-zen-garden"
                             >Github repo</a
                         >
                     </blockquote>

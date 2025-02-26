@@ -22,6 +22,7 @@ const props = defineProps({
 });
 
 const isFull = ref(props.isFull);
+const pouringSfx = useTemplateRef('pouring-water-sfx');
 const fillingSfx = useTemplateRef('filling-sfx');
 const walkingSfx = useTemplateRef('walking-sfx');
 
@@ -61,7 +62,11 @@ watch(
 
 onMounted(() => {
     window.addEventListener('watering', () => {
+        pouringSfx.value.components.sound.playSound();
         isFull.value = false;
+        setTimeout(() => {
+            pouringSfx.value.components.sound.stopSound();
+        }, 1000);
     });
 });
 </script>
@@ -77,6 +82,11 @@ onMounted(() => {
         simple-grab
         @grab="() => store.setCarryItem('waterCan', { isFull })"
     >
+        <a-sound
+            ref="pouring-water-sfx"
+            src="#pouring-water-sound"
+            positional="true"
+        ></a-sound>
         <a-sound
             ref="filling-sfx"
             src="#watercan-fill-sound"

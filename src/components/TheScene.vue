@@ -16,8 +16,12 @@ import TheBackPack from './TheBackPack.vue';
 import AppPlantingZone from './AppPlantingZone.vue';
 import TheWaterCan from './TheWaterCan.vue';
 import AppWaterCanPlaceholder from './AppWaterCanPlaceholder.vue';
+import TheSun from './TheSun.vue';
+import TheMoon from './TheMoon.vue';
 
 const allAssetsLoaded = ref(false);
+const DAY_DURATION = 100000;
+const ENABLE_SUN_NIGHT_CYCLE = false;
 </script>
 
 <template>
@@ -123,13 +127,19 @@ const allAssetsLoaded = ref(false);
         </a-assets>
 
         <template v-if="allAssetsLoaded">
-            <a-entity
-                light="type: ambient; color: #fff; intensity: 2.7"
-            ></a-entity>
-            <a-entity
-                light="type: directional; intensity: 2"
-                position="0 3.653 2.119"
-            ></a-entity>
+            <template v-if="ENABLE_SUN_NIGHT_CYCLE">
+                <TheSun :revolution-time="DAY_DURATION"></TheSun>
+                <TheMoon :revolution-time="DAY_DURATION"></TheMoon>
+            </template>
+            <template v-else>
+                <a-entity
+                    light="type: ambient; color: #fff; intensity: 2.7"
+                ></a-entity>
+                <a-entity
+                    light="type: directional; intensity: 2"
+                    position="0 3.653 2.119"
+                ></a-entity>
+            </template>
 
             <template v-for="flower in flowersStore.getFlowers()">
                 <AppFlower

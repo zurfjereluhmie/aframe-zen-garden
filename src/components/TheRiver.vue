@@ -38,6 +38,7 @@ onMounted(() => {
             id="river-hitbox"
             obb-collider
             :position="hitboxPosition"
+            material="visible: false;"
             rotation="0 -35 0"
             scale="1 1 13"
             width="1"

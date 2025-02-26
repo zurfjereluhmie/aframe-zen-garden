@@ -74,8 +74,6 @@ watch(
     () => store.getCarryItem(),
     (newCarryItem) => {
         if (newCarryItem?.itemName === 'flower' && !droppedEl.value) {
-            console.log(droppedEl.value);
-
             pot.value?.setAttribute('simple-grab-drop-zone', 'dropOnly: true;');
             pot.value?.setAttribute('clickable', '');
             return;

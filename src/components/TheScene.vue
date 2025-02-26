@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import TheCameraRig from './TheCameraRig.vue';
 
 import TheFloor from './TheFloor.vue';
@@ -14,13 +14,27 @@ import '../aframe/outline.js';
 import TheBackPack from './TheBackPack.vue';
 import AppPlantingZone from './AppPlantingZone.vue';
 import TheWaterCan from './TheWaterCan.vue';
+import AppWaterCanPlaceholder from './AppWaterCanPlaceholder.vue';
 
 const allAssetsLoaded = ref(false);
+
+const flowers = ref([]);
+
+onMounted(() => {
+    window.addEventListener('flower-ready', (event) => {
+        const pos = new THREE.Vector3();
+        event.detail.el.object3D.getWorldPosition(pos);
+        flowers.value.push({
+            position: `${pos.x} ${pos.y} ${pos.z}`,
+            flowerName: event.detail.seedType,
+        });
+    });
+});
 </script>
 
 <template>
     <a-scene
-        obb-collider="showColliders: true"
+        obb-collider="showColliders: false"
         stats
         fog="type: linear; color: #a3d0ed; near: 30; far: 60"
         background="color: #a3d0ed;"
@@ -129,6 +143,13 @@ const allAssetsLoaded = ref(false);
                 position="0 3.653 2.119"
             ></a-entity>
 
+            <template v-for="flower in flowers">
+                <AppFlower
+                    :position="flower.position"
+                    :flowerName="flower.flowerName"
+                ></AppFlower>
+            </template>
+
             <TheShelf position="-5.726 0 -2" rotation="0 45 0">
                 <AppPot position="-0.741 0.520 -0.023" type="big"></AppPot>
                 <AppPot position="0.600 0.829 -0.018" type="big"></AppPot>
@@ -143,7 +164,11 @@ const allAssetsLoaded = ref(false);
                 <TheWaterCan
                     position="-1.5 0.9 0"
                     rotation="0 -180 0"
+                    :is-full="true"
                 ></TheWaterCan>
+                <AppWaterCanPlaceholder
+                    position="-1.592 0.7 0.036"
+                ></AppWaterCanPlaceholder>
             </TheMarket>
 
             <TheBackPack position="0 0 -5"></TheBackPack>

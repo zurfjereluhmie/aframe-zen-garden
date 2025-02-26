@@ -3,7 +3,7 @@ import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/event-set.js';
 import '../aframe/listen-to.js';
-import { computed, onMounted, watch } from 'vue';
+import { computed } from 'vue';
 import { store } from '../stores/carryStore.js';
 
 const props = defineProps({
@@ -41,31 +41,22 @@ const hitboxPosition = computed(() => {
 });
 
 const handleGrab = (event) => {
-    store.clearCarryItem();
     store.setCarryItem('flower', { flowerId });
 };
-
-watch(
-    () => store.getCarryItem(),
-    (newCarryItem) => {
-        const self = document.getElementById(flowerId);
-        if (!newCarryItem && store.getPreviousCarryItem().itemName === 'pot') {
-            self.setAttribute('simple-grab', '');
-            self.setAttribute('clickable', '');
-        }
-
-        if (newCarryItem?.itemName === 'pot') {
-            self.removeAttribute('simple-grab');
-            self.removeAttribute('clickable');
-        }
-    }
-);
 </script>
 
 <template>
     <a-entity
-        simple-grab
-        clickable
+        :simple-grab="
+            ['pot', 'waterCan'].includes(store.getCarryItem()?.itemName)
+                ? null
+                : ''
+        "
+        :clickable="
+            ['pot', 'waterCan'].includes(store.getCarryItem()?.itemName)
+                ? null
+                : ''
+        "
         :id="flowerId"
         :position="hitboxPosition"
         :geometry="`primitive: box; ${flowers[flowerName].hitbox}`"

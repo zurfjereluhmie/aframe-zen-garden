@@ -4,6 +4,9 @@ export const store = reactive({
     carryItem: null,
     previous: null,
     setCarryItem(itemName, details) {
+        if (store.carryItem) {
+            store.clearCarryItem();
+        }
         store.carryItem = {
             itemName,
             details,

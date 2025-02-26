@@ -41,7 +41,6 @@ const fillingComplete = (event) => {
     isFull.value = true;
     fillingSfx.value.components.sound.stopSound();
     setTimeout(() => {
-        store.clearCarryItem();
         store.setCarryItem('waterCan', { isFull: isFull.value });
     }, 1);
 };

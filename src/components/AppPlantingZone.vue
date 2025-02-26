@@ -5,7 +5,6 @@ import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/event-set.js';
 import '../aframe/listen-to.js';
-import AppFlower from './AppFlower.vue';
 
 defineProps({
     position: {
@@ -36,14 +35,26 @@ const handleDrop = (event, detail) => {
 
 const handleClickWatering = (event, detail) => {
     if (!zones.value[detail.index]) return;
+    if (!store.getCarryItem()) return;
+    if (store.getCarryItem().itemName !== 'waterCan') return;
+    if (!store.getCarryItem().details.isFull) return;
+    setTimeout(() => {
+        store.setCarryItem('waterCan', { isFull: false });
+    }, 1);
 
     const zone = zones.value[detail.index];
     zone.hydratationLevel += 1;
-    if (zone.hydratationLevel === 4) {
-        event.target.removeAttribute('clickable');
-        event.target.removeAttribute('simple-grab-drop-zone');
-        event.target.removeAttribute('outline-on-event');
 
+    window.dispatchEvent(
+        new CustomEvent('watering', {
+            detail: {
+                ...zone,
+                event: { ...event },
+            },
+        })
+    );
+
+    if (zone.hydratationLevel === 4) {
         window.dispatchEvent(
             new CustomEvent('flower-ready', {
                 detail: {
@@ -62,13 +73,6 @@ const handleClickWatering = (event, detail) => {
     }
 };
 
-const flowerGrabbed = (event, detail) => {
-    zones.value[detail.index] = null;
-    event.target.setAttribute('clickable');
-    event.target.setAttribute('simple-grab-drop-zone');
-    event.target.setAttribute('outline-on-event');
-};
-
 watch(
     () => store.getCarryItem(),
     (newCarryItem) => {
@@ -82,7 +86,13 @@ watch(
         }
 
         if (newCarryItem?.itemName === 'waterCan') {
-            if (!newCarryItem.details.isFull) return;
+            if (!newCarryItem.details.isFull) {
+                model.value.querySelectorAll('a-box').forEach((zone, i) => {
+                    zone.removeAttribute('clickable');
+                    zone.removeAttribute('simple-grab-drop-zone');
+                });
+                return;
+            }
 
             model.value.querySelectorAll('a-box').forEach((zone, i) => {
                 if (!zones.value[i]) return;
@@ -137,12 +147,6 @@ watch(
                         position="0 0.08 0"
                         :rotation="zones[i - 1].randomRotation"
                     ></a-gltf-model>
-                    <!-- <AppFlower
-                        v-if="zones[i - 1].hydratationLevel === 4"
-                        :flowerName="zones[i - 1].seedType"
-                        position="0 0.08 0"
-                        @_grab="flowerGrabbed($event, { index: i - 1 })"
-                    ></AppFlower> -->
                 </template>
             </a-box>
         </template>

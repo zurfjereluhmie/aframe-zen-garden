@@ -164,7 +164,6 @@ onMounted(() => {
                 <TheWaterCan
                     position="-1.5 0.9 0"
                     rotation="0 -180 0"
-                    :is-full="true"
                 ></TheWaterCan>
                 <AppWaterCanPlaceholder
                     position="-1.592 0.7 0.036"

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, useTemplateRef, watch } from 'vue';
+import { onMounted, ref, useTemplateRef, watch } from 'vue';
 import { store } from '../stores/carryStore.js';
 import '../aframe/clickable.js';
 import '../aframe/simple-grab.js';
@@ -53,11 +53,17 @@ watch(
             return;
         }
         if (store.getPreviousCarryItem()?.itemName === 'waterCan') {
-            walkingSfx.value.components.sound.pauseSound();
+            walkingSfx.value?.components.sound.pauseSound();
             return;
         }
     }
 );
+
+onMounted(() => {
+    window.addEventListener('watering', () => {
+        isFull.value = false;
+    });
+});
 </script>
 
 <template>

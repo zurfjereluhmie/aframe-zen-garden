@@ -1,6 +1,7 @@
 <script setup>
 import { ref, useTemplateRef, watch } from 'vue';
 import { store } from '../stores/carryStore.js';
+import { store as flowersStore } from '../stores/flowersStore.js';
 import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/event-set.js';
@@ -19,7 +20,6 @@ defineProps({
 
 const model = useTemplateRef('model');
 const zones = ref(Array.from({ length: 8 }, (_, i) => null));
-const flowers = ref([]);
 
 const handleDrop = (event, detail) => {
     store.clearCarryItem();
@@ -55,14 +55,13 @@ const handleClickWatering = (event, detail) => {
     );
 
     if (zone.hydratationLevel === 4) {
-        window.dispatchEvent(
-            new CustomEvent('flower-ready', {
-                detail: {
-                    ...zone,
-                    event: { ...event },
-                },
-            })
-        );
+        const pos = new THREE.Vector3();
+        zone.el.object3D.getWorldPosition(pos);
+        flowersStore.addFlower({
+            position: `${pos.x} ${pos.y} ${pos.z}`,
+            flowerName: zone.seedType,
+            details: { ...zone },
+        });
 
         zones.value[detail.index] = null;
         event.target.setAttribute('clickable');

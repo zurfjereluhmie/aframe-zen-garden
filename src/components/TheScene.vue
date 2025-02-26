@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import { store as flowersStore } from '../stores/flowersStore.js';
 import TheCameraRig from './TheCameraRig.vue';
 
 import TheFloor from './TheFloor.vue';
@@ -17,19 +18,6 @@ import TheWaterCan from './TheWaterCan.vue';
 import AppWaterCanPlaceholder from './AppWaterCanPlaceholder.vue';
 
 const allAssetsLoaded = ref(false);
-
-const flowers = ref([]);
-
-onMounted(() => {
-    window.addEventListener('flower-ready', (event) => {
-        const pos = new THREE.Vector3();
-        event.detail.el.object3D.getWorldPosition(pos);
-        flowers.value.push({
-            position: `${pos.x} ${pos.y} ${pos.z}`,
-            flowerName: event.detail.seedType,
-        });
-    });
-});
 </script>
 
 <template>
@@ -143,7 +131,7 @@ onMounted(() => {
                 position="0 3.653 2.119"
             ></a-entity>
 
-            <template v-for="flower in flowers">
+            <template v-for="flower in flowersStore.getFlowers()">
                 <AppFlower
                     :position="flower.position"
                     :flowerName="flower.flowerName"

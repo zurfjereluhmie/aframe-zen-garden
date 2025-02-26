@@ -44,6 +44,7 @@ const handleDrop = (event) => {
 
     droppedEl.value = event.detail.el;
     droppedEl.value.removeAttribute('clickable');
+    droppedEl.value.dataset.potId = potId;
 
     droppedEl.value.setAttribute('bind-position', {
         target: `#${potId} .dropbox`,

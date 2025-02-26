@@ -3,7 +3,7 @@ import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/event-set.js';
 import '../aframe/listen-to.js';
-import { computed } from 'vue';
+import { computed, useTemplateRef } from 'vue';
 import { store } from '../stores/carryStore.js';
 
 const props = defineProps({
@@ -32,6 +32,7 @@ const flowers = {
     },
 };
 
+const flowerEntity = useTemplateRef('flower-entity');
 const flowerId = `flower-${Math.random().toString(36).substring(2, 9)}`;
 const hitboxPosition = computed(() => {
     const [x, y, z] = props.position
@@ -47,13 +48,16 @@ const handleGrab = (event) => {
 
 <template>
     <a-entity
+        ref="flower-entity"
         :simple-grab="
-            ['pot', 'waterCan'].includes(store.getCarryItem()?.itemName)
+            ['pot', 'waterCan'].includes(store.getCarryItem()?.itemName) ||
+            flowerEntity?.dataset.potId
                 ? null
                 : ''
         "
         :clickable="
-            ['pot', 'waterCan'].includes(store.getCarryItem()?.itemName)
+            ['pot', 'waterCan'].includes(store.getCarryItem()?.itemName) ||
+            flowerEntity?.dataset.potId
                 ? null
                 : ''
         "

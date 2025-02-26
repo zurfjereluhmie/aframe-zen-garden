@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onMounted, useTemplateRef, watch } from 'vue';
+import { ref, useTemplateRef, watch } from 'vue';
 import { store } from '../stores/carryStore.js';
+import { generateId } from '../utils/idGenerator.js';
 import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/outline.js';
@@ -18,7 +19,7 @@ defineProps({
 
 const droppedEl = ref(null);
 
-const placeholderId = `watercan-placeholder-${Math.random().toString(36).substring(2, 9)}`;
+const placeholderId = generateId('watercan-placeholder');
 const placeholder = useTemplateRef('placeholder');
 
 const handleDrop = (event) => {

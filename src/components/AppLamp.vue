@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { generateId } from '../utils/idGenerator.js';
 import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 
@@ -16,6 +17,7 @@ const props = defineProps({
 
 const isOn = ref(props.isOn);
 const lastclick = ref(null);
+const lampId = generateId('lamp');
 
 const handleClick = (event) => {
     if (lastclick.value) {
@@ -30,6 +32,7 @@ const handleClick = (event) => {
 
 <template>
     <a-gltf-model
+        :id="lampId"
         :position="position"
         ref="lamp"
         src="#tool-lamp"

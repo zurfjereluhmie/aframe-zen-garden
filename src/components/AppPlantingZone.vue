@@ -2,6 +2,7 @@
 import { ref, useTemplateRef, watch } from 'vue';
 import { store } from '../stores/carryStore.js';
 import { store as flowersStore } from '../stores/flowersStore.js';
+import { generateId } from '../utils/idGenerator.js';
 import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/event-set.js';
@@ -19,6 +20,7 @@ defineProps({
 });
 
 const model = useTemplateRef('model');
+const zoneId = generateId('planting-zone');
 const zones = ref(Array.from({ length: 8 }, (_, i) => null));
 
 const handleDrop = (event, detail) => {
@@ -111,6 +113,7 @@ watch(
 
 <template>
     <a-gltf-model
+        :id="zoneId"
         ref="model"
         src="#planting-zone"
         :position="position"

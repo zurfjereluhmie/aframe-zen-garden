@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, useTemplateRef } from 'vue';
 import { store } from '../stores/carryStore.js';
+import { generateId } from '../utils/idGenerator.js';
 import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
 import '../aframe/bind-position.js';
@@ -21,7 +22,7 @@ const props = defineProps({
 
 const pot = useTemplateRef('pot');
 const outerHitbox = useTemplateRef('outerHitbox');
-const potId = `pot-${Math.random().toString(36).substring(2, 11)}`;
+const potId = generateId('pot');
 const droppedEl = ref(null);
 
 const potMeta = {

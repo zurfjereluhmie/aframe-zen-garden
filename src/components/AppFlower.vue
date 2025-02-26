@@ -5,6 +5,7 @@ import '../aframe/event-set.js';
 import '../aframe/listen-to.js';
 import { computed, useTemplateRef } from 'vue';
 import { store } from '../stores/carryStore.js';
+import { generateId } from '../utils/idGenerator.js';
 
 const props = defineProps({
     flowerName: {
@@ -33,7 +34,7 @@ const flowers = {
 };
 
 const flowerEntity = useTemplateRef('flower-entity');
-const flowerId = `flower-${Math.random().toString(36).substring(2, 9)}`;
+const flowerId = generateId('flower');
 const hitboxPosition = computed(() => {
     const [x, y, z] = props.position
         .split(' ')

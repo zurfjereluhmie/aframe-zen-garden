@@ -146,7 +146,7 @@ watch(
                     <a-gltf-model
                         v-if="zones[i - 1].hydratationLevel === 3"
                         src="#seeding-process-step-3"
-                        position="0 0.08 0"
+                        position="0 0.15 0"
                         :rotation="zones[i - 1].randomRotation"
                     ></a-gltf-model>
                 </template>

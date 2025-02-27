@@ -21,6 +21,7 @@ const droppedEl = ref(null);
 
 const placeholderId = generateId('watercan-placeholder');
 const placeholder = useTemplateRef('placeholder');
+const placeholderHitbox = useTemplateRef('placeholder-hitbox');
 
 const handleDrop = (event) => {
     store.clearCarryItem();
@@ -34,11 +35,13 @@ const handleUndrop = (event) => {
 watch(
     () => store.getCarryItem(),
     (newCarryItem) => {
-        if (newCarryItem?.itemName === 'waterCan') {
+        if (newCarryItem && newCarryItem.itemName === 'waterCan') {
             placeholder.value.setAttribute('clickable', '');
+            placeholderHitbox.value.setAttribute('clickable', '');
             placeholder.value.setAttribute('simple-grab-drop-zone', '');
         } else {
             placeholder.value.removeAttribute('clickable');
+            placeholderHitbox.value.removeAttribute('clickable');
             placeholder.value.removeAttribute('simple-grab-drop-zone');
         }
     }
@@ -47,19 +50,28 @@ watch(
 
 <template>
     <a-box
-        outline-on-event
-        ref="placeholder"
+        ref="placeholder-hitbox"
         :id="placeholderId"
         :position="position"
         :scale="scale"
+        rotation="0 180 0"
         depth="1"
         width="1"
         height="0"
-        rotation="0 180 0"
-        material="opacity: 1"
-        @drop="handleDrop($event)"
-        @undrop="handleUndrop($event)"
+        outline-on-event
+        material="opacity: 0"
     >
+        <a-box
+            ref="placeholder"
+            depth="1"
+            width="1"
+            height="0.2"
+            position="0 0.189 0"
+            material="visible: false"
+            @drop="handleDrop($event)"
+            @undrop="handleUndrop($event)"
+        >
+        </a-box>
     </a-box>
 </template>
 

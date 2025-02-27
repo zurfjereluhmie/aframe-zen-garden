@@ -61,6 +61,7 @@ const handleClickWatering = (event, detail) => {
         zone.el.object3D.getWorldPosition(pos);
         flowersStore.addFlower({
             position: `${pos.x} ${pos.y} ${pos.z}`,
+            rotation: zone.randomRotation,
             flowerName: zone.seedType,
             details: { ...zone },
         });

@@ -144,6 +144,7 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
             <template v-for="flower in flowersStore.getFlowers()">
                 <AppFlower
                     :position="flower.position"
+                    :rotation="flower.rotation"
                     :flowerName="flower.flowerName"
                 ></AppFlower>
             </template>

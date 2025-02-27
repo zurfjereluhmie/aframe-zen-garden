@@ -93,6 +93,14 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
                 src="./assets/flowers/seed-pack-tulip.glb"
             ></a-asset-item>
             <a-asset-item
+                id="flower-violet"
+                src="./assets/flowers/violet.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="flower-violet-seeds"
+                src="./assets/flowers/seed-pack-violet.glb"
+            ></a-asset-item>
+            <a-asset-item
                 id="seeding-process-step-1"
                 src="./assets/seeding-process/step-1.glb"
             ></a-asset-item>
@@ -179,6 +187,7 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
                 <AppPot position="0 1 0" type="high"></AppPot>
                 <!-- <a-box position="0 0.5 0"></a-box> -->
                 <AppLamp position="2 0 0.15"></AppLamp>
+                <AppFlower position="-2 0 0" flowerName="violet"></AppFlower>
                 <AppFlower position="-1 0 0" flowerName="sunflower"></AppFlower>
                 <AppFlower position="1 0 0" flowerName="daisy"></AppFlower>
                 <AppFlower position="2 0 0" flowerName="tulip"></AppFlower>

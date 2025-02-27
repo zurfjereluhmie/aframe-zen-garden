@@ -12,7 +12,7 @@ defineProps({
     },
 });
 
-const packCount = 4;
+const packCount = 3;
 </script>
 
 <template>
@@ -21,15 +21,19 @@ const packCount = 4;
         <template v-for="(position, index) in packCount" :key="index">
             <AppSeedPack
                 type="sunflower"
-                :position="`-0.3 0.720 ${-0.47 + index * 0.25}`"
+                :position="`-0.6 0.72 ${-0.43 + index * 0.3}`"
             ></AppSeedPack>
             <AppSeedPack
                 type="daisy"
-                :position="`0.2 0.720 ${-0.47 + index * 0.25}`"
+                :position="`-0.2 0.72 ${-0.43 + index * 0.3}`"
             ></AppSeedPack>
             <AppSeedPack
                 type="tulip"
-                :position="`0.7 0.720 ${-0.47 + index * 0.25}`"
+                :position="`0.2 0.72 ${-0.43 + index * 0.3}`"
+            ></AppSeedPack>
+            <AppSeedPack
+                type="violet"
+                :position="`0.6 0.73 ${-0.43 + index * 0.3}`"
             ></AppSeedPack>
         </template>
         <!-- <AppSeedPack type="daisy" position="2 1 0"></AppSeedPack> -->

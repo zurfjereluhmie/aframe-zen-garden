@@ -125,45 +125,122 @@ function enterScene() {
                     </dt>
                     <dd>By Ada Rose Cannon under MIT License</dd>
 
-                    <dt>
-                        <a
-                            href="https://sketchfab.com/3d-models/vr-gallery-1ac32ed62fdf424498acc146fad31f7e"
-                            target="_blank"
-                            >VR Gallery</a
-                        >
-                    </dt>
-                    <dd>
-                        by
-                        <a href="https://sketchfab.com/mvrc.art" target="_blank"
-                            >Maxim Mavrichev</a
-                        >
-                        under
-                        <a
-                            href="https://creativecommons.org/licenses/by/4.0/"
-                            target="_blank"
-                            >CC BY 4.0</a
-                        >
-                    </dd>
-
-                    <dt>
-                        <a
-                            href="https://sketchfab.com/3d-models/3d-gallery-for-vr-projects-68f77ed8558c4bd59e0a13e2cc9d1fd1"
-                            target="_blank"
-                            >Physic room model</a
-                        >
-                    </dt>
-                    <dd>
-                        by
-                        <a href="https://sketchfab.com/tekuto1s" target="_blank"
-                            >tekuto1s</a
-                        >
-                        under
-                        <a
-                            href="https://creativecommons.org/licenses/by/4.0/"
-                            target="_blank"
-                            >CC BY 4.0</a
-                        >
-                    </dd>
+                    <dl>
+                        <dt>
+                            <a
+                                href="https://poly.pizza/m/dp6b5ILj6At"
+                                target="_blank"
+                                >Camera</a
+                            >
+                        </dt>
+                        <dd>
+                            by Poly by Google under
+                            <a
+                                href="https://creativecommons.org/licenses/by/3.0/"
+                                target="_blank"
+                                >CC-BY</a
+                            >
+                            via
+                            <a
+                                href="https://poly.pizza/m/dp6b5ILj6At"
+                                target="_blank"
+                                >Poly Pizza</a
+                            >
+                        </dd>
+                        <dt>
+                            <a
+                                href="https://poly.pizza/m/5COCzyz489J"
+                                target="_blank"
+                                >Plants - Assorted shelf plants</a
+                            >
+                        </dt>
+                        <dd>
+                            by Jakers_H under
+                            <a
+                                href="https://creativecommons.org/licenses/by/3.0/"
+                                target="_blank"
+                                >CC-BY</a
+                            >
+                            via
+                            <a
+                                href="https://poly.pizza/m/5COCzyz489J"
+                                target="_blank"
+                                >Poly Pizza</a
+                            >
+                        </dd>
+                        <dt>
+                            <a
+                                href="https://poly.pizza/m/RP8p3h7JHJ"
+                                target="_blank"
+                                >Flowers</a
+                            >
+                        </dt>
+                        <dd>
+                            by CreativeTrio via
+                            <a
+                                href="https://poly.pizza/m/RP8p3h7JHJ"
+                                target="_blank"
+                                >Poly Pizza</a
+                            >
+                        </dd>
+                        <dt>
+                            <a
+                                href="https://poly.pizza/m/9dubDMkAcZ5"
+                                target="_blank"
+                                >Flower</a
+                            >
+                        </dt>
+                        <dd>
+                            by Zoe XR under
+                            <a
+                                href="https://creativecommons.org/licenses/by/3.0/"
+                                target="_blank"
+                                >CC-BY</a
+                            >
+                            via
+                            <a
+                                href="https://poly.pizza/m/9dubDMkAcZ5"
+                                target="_blank"
+                                >Poly Pizza</a
+                            >
+                        </dd>
+                        <dt>
+                            <a
+                                href="https://poly.pizza/m/cQ2ejiIig4n"
+                                target="_blank"
+                                >Tulip</a
+                            >
+                        </dt>
+                        <dd>
+                            by Hugo Gibson under
+                            <a
+                                href="https://creativecommons.org/licenses/by/3.0/"
+                                target="_blank"
+                                >CC-BY</a
+                            >
+                            via
+                            <a
+                                href="https://poly.pizza/m/cQ2ejiIig4n"
+                                target="_blank"
+                                >Poly Pizza</a
+                            >
+                        </dd>
+                        <dt>
+                            <a
+                                href="https://poly.pizza/m/DgOCW9ZCRJ"
+                                target="_blank"
+                                >Character Animated</a
+                            >
+                        </dt>
+                        <dd>
+                            by Quaternius via
+                            <a
+                                href="https://poly.pizza/m/DgOCW9ZCRJ"
+                                target="_blank"
+                                >Poly Pizza</a
+                            >
+                        </dd>
+                    </dl>
                 </dl>
             </div>
         </div>

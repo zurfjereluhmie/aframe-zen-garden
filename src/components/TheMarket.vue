@@ -17,6 +17,7 @@ defineProps({
 const grabbedSeed = ref(new Map());
 
 const handleGrab = (event) => {
+    if (grabbedSeed.value.has(event.detail.el.id)) return;
     grabbedSeed.value.set(event.detail.el.id, {
         position: { ...event.detail.el.object3D.position },
         type: event.detail.el.dataset.seedType,
@@ -24,7 +25,7 @@ const handleGrab = (event) => {
 };
 
 const handleDrop = (event) => {
-    if (!event.detail.dropZone.parentNode.id.startsWith('planting-zone'))
+    if (!event.detail.dropZone?.parentNode?.id.startsWith('planting-zone'))
         return;
     const seedInit = grabbedSeed.value.get(event.detail.el.id);
     seedsStore.addSeed({

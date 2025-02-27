@@ -146,7 +146,7 @@ watch(
         :rotation="rotation"
         scale="0.7 0.7 0.7"
         :look-at_horizon="`enabled: ${lookAtCamera}`"
-        emit-when-near="distance: 3; event: close; eventFar: far"
+        emit-when-near="target: #head;distance: 3; event: close; eventFar: far"
         @close="handleClose()"
         @far="handleFar()"
         :clickable="canTakeFlower ? '' : null"

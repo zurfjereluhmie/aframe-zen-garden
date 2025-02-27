@@ -19,6 +19,7 @@ import AppWaterCanPlaceholder from './AppWaterCanPlaceholder.vue';
 import TheSun from './TheSun.vue';
 import TheMoon from './TheMoon.vue';
 import TheCharacter from './TheCharacter.vue';
+import ThePhotoCam from './ThePhotoCam.vue';
 
 const allAssetsLoaded = ref(false);
 const DAY_DURATION = 100000;
@@ -207,6 +208,10 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
                 id="tool-water-can"
                 src="./assets/tools/water-can.glb"
             ></a-asset-item>
+            <a-asset-item
+                id="tool-photo-camera"
+                src="./assets/tools/photoCamera.glb"
+            ></a-asset-item>
             <!-- END MODELS -->
         </a-assets>
 
@@ -224,6 +229,8 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
                     position="0 3.653 2.119"
                 ></a-entity>
             </template>
+
+            <ThePhotoCam position="3 1 0"></ThePhotoCam>
 
             <TheCharacter position="-6.5 0 -2"></TheCharacter>
 

@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from 'vue';
+import { store as seedsStore } from '../stores/seedsStore.js';
 import AppSeedPack from './AppSeedPack.vue';
 
 defineProps({
@@ -12,32 +14,38 @@ defineProps({
     },
 });
 
-const packCount = 3;
+const grabbedSeed = ref(new Map());
+
+const handleGrab = (event) => {
+    grabbedSeed.value.set(event.detail.el.id, {
+        position: { ...event.detail.el.object3D.position },
+        type: event.detail.el.dataset.seedType,
+    });
+};
+
+const handleDrop = (event) => {
+    if (!event.detail.dropZone.parentNode.id.startsWith('planting-zone'))
+        return;
+    const seedInit = grabbedSeed.value.get(event.detail.el.id);
+    seedsStore.addSeed({
+        type: seedInit.type,
+        position: `${seedInit.position.x} ${seedInit.position.y} ${seedInit.position.z}`,
+    });
+    grabbedSeed.value.delete(event.detail.el.id);
+};
 </script>
 
 <template>
     <a-gltf-model src="#market" :position :rotation>
         <slot></slot>
-        <template v-for="(position, index) in packCount" :key="index">
+        <template v-for="(seed, index) in seedsStore.getSeeds()" :key="index">
             <AppSeedPack
-                type="sunflower"
-                :position="`-0.6 0.72 ${-0.43 + index * 0.3}`"
-            ></AppSeedPack>
-            <AppSeedPack
-                type="daisy"
-                :position="`-0.2 0.72 ${-0.43 + index * 0.3}`"
-            ></AppSeedPack>
-            <AppSeedPack
-                type="tulip"
-                :position="`0.2 0.72 ${-0.43 + index * 0.3}`"
-            ></AppSeedPack>
-            <AppSeedPack
-                type="violet"
-                :position="`0.6 0.73 ${-0.43 + index * 0.3}`"
+                :position="seed.position"
+                @grab="handleGrab($event)"
+                @drop="handleDrop($event)"
+                :type="seed.type"
             ></AppSeedPack>
         </template>
-        <!-- <AppSeedPack type="daisy" position="2 1 0"></AppSeedPack> -->
-        <!-- <AppSeedPack type="tulip" position="1 1 0"></AppSeedPack> -->
     </a-gltf-model>
 </template>
 

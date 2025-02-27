@@ -23,7 +23,17 @@ defineProps({
     },
 });
 
+const emit = defineEmits(['grab', 'drop']);
+
 const packId = generateId('seed-pack');
+
+const handleGrab = (event) => {
+    store.setCarryItem('seedPack', { packId });
+    emit('grab', event);
+};
+const handleDrop = (event) => {
+    emit('drop', event);
+};
 </script>
 
 <template>
@@ -36,7 +46,8 @@ const packId = generateId('seed-pack');
         geometry="primitive: box; width: 0.13; height: 0.04; depth: 0.23"
         material="visible: false;"
         :data-seed-type="type"
-        @grab="() => store.setCarryItem('seedPack', { packId })"
+        @grab="handleGrab($event)"
+        @drop="handleDrop($event)"
     >
         <a-gltf-model
             :src="`#flower-${type}-seeds`"

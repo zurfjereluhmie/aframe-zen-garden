@@ -20,13 +20,13 @@ import '../aframe/physx-grab.js';
             camera
             position="0 1.65 0"
         >
-            <a-entity
+            <!-- <a-entity
                 id="head-hitbox"
                 geometry="primitive: box; height: 0.5; width: 1; depth: 0.1"
                 position="0 0 -0.3"
                 material="opacity: 0"
                 obb-collider
-            ></a-entity>
+            ></a-entity> -->
             <a-entity
                 geometry="primitive: circle; radius: 0.0003;"
                 material="shader: flat; color: white;"

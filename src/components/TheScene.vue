@@ -210,7 +210,7 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
             ></a-asset-item>
             <a-asset-item
                 id="tool-photo-camera"
-                src="./assets/tools/photoCamera.glb"
+                src="./assets/tools/photoCamera-normal.glb"
             ></a-asset-item>
             <!-- END MODELS -->
         </a-assets>

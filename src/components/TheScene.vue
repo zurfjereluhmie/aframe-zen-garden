@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { ref } from 'vue';
 import { store as flowersStore } from '../stores/flowersStore.js';
 import TheCameraRig from './TheCameraRig.vue';
 
@@ -18,6 +18,7 @@ import TheWaterCan from './TheWaterCan.vue';
 import AppWaterCanPlaceholder from './AppWaterCanPlaceholder.vue';
 import TheSun from './TheSun.vue';
 import TheMoon from './TheMoon.vue';
+import TheCharacter from './TheCharacter.vue';
 
 const allAssetsLoaded = ref(false);
 const DAY_DURATION = 100000;
@@ -34,6 +35,74 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
     >
         <a-assets @loaded="allAssetsLoaded = true">
             <!-- SOUNDS -->
+            <!-- DIALOGS -->
+            <audio
+                id="dialog-1_introduction"
+                src="./assets/sounds/dialog-1_introduction.mp3"
+            ></audio>
+            <audio
+                id="dialog-1_request-flower"
+                src="./assets/sounds/dialog-1_request-flower.mp3"
+            ></audio>
+            <audio
+                id="dialog-2_introduction_flower"
+                src="./assets/sounds/dialog-2_introduction_flower.mp3"
+            ></audio>
+            <audio
+                id="dialog-3_introduction_gift"
+                src="./assets/sounds/dialog-3_introduction_gift.mp3"
+            ></audio>
+            <audio
+                id="dialog-4_fail-1"
+                src="./assets/sounds/dialog-4_fail-1.mp3"
+            ></audio>
+            <audio
+                id="dialog-4_fail-2"
+                src="./assets/sounds/dialog-4_fail-2.mp3"
+            ></audio>
+            <audio
+                id="dialog-4_fail-3"
+                src="./assets/sounds/dialog-4_fail-3.mp3"
+            ></audio>
+            <audio
+                id="dialog-4_sucess-nearby-1"
+                src="./assets/sounds/dialog-4_sucess-nearby-1.mp3"
+            ></audio>
+            <audio
+                id="dialog-4_sucess-nearby-2"
+                src="./assets/sounds/dialog-4_sucess-nearby-2.mp3"
+            ></audio>
+            <audio
+                id="dialog-4_sucess-1"
+                src="./assets/sounds/dialog-4_sucess-1.mp3"
+            ></audio>
+            <audio
+                id="dialog-4_waiting-1"
+                src="./assets/sounds/dialog-4_waiting-1.mp3"
+            ></audio>
+            <audio
+                id="dialog-4_waiting-2"
+                src="./assets/sounds/dialog-4_waiting-2.mp3"
+            ></audio>
+            <audio
+                id="dialog-4_waiting-3"
+                src="./assets/sounds/dialog-4_waiting-3.mp3"
+            ></audio>
+            <audio
+                id="dialog-5_end-1"
+                src="./assets/sounds/dialog-5_end-1.mp3"
+            ></audio>
+            <audio
+                id="dialog-5_end-2"
+                src="./assets/sounds/dialog-5_end-2.mp3"
+            ></audio>
+            <audio
+                id="dialog-5_end-3"
+                src="./assets/sounds/dialog-5_end-3.mp3"
+            ></audio>
+            <!-- END DIALOGS -->
+
+            <!-- SFX -->
             <audio id="river-sound" src="./assets/sounds/sfx-water.mp3"></audio>
             <audio
                 id="watercan-fill-sound"
@@ -47,10 +116,16 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
                 id="walking-with-watercan-full-sound"
                 src="./assets/sounds/sfx-walking-watercan-full.mp3"
             ></audio>
+            <!-- END SFX -->
+            <!-- END SOUNDS -->
 
             <!-- MODELS -->
             <a-asset-item id="scene" src="./assets/scene.glb"></a-asset-item>
             <a-asset-item id="market" src="./assets/market.glb"></a-asset-item>
+            <a-asset-item
+                id="character"
+                src="./assets/character.glb"
+            ></a-asset-item>
             <a-asset-item
                 id="backpack"
                 src="./assets/tools/backpack.glb"
@@ -132,6 +207,7 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
                 id="tool-water-can"
                 src="./assets/tools/water-can.glb"
             ></a-asset-item>
+            <!-- END MODELS -->
         </a-assets>
 
         <template v-if="allAssetsLoaded">
@@ -149,6 +225,8 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
                 ></a-entity>
             </template>
 
+            <TheCharacter position="-6.5 0 -2"></TheCharacter>
+
             <template v-for="flower in flowersStore.getFlowers()">
                 <AppFlower
                     :position="flower.position"
@@ -157,7 +235,7 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
                 ></AppFlower>
             </template>
 
-            <TheShelf position="-5.726 0 -2" rotation="0 45 0">
+            <TheShelf position="5.726 0 -2" rotation="0 -45 0">
                 <AppPot position="-0.741 0.520 -0.023" type="big"></AppPot>
                 <AppPot position="0.600 0.829 -0.018" type="big"></AppPot>
                 <AppPot position="0.194 1.855 -0.027" type="big"></AppPot>

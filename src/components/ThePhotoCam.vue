@@ -21,7 +21,9 @@ defineProps({
 
 const id = generateId('camera');
 const isVR = ref(false);
-const takenPosition = computed(() => (isVR.value ? '0 0 0' : '0.01 -0.3 -0.5'));
+const takenPosition = computed(() =>
+    isVR.value ? '-0.15 0 0' : '0.01 -0.3 -0.5'
+);
 
 const takeAPhoto = () => {
     const screenshot = document.querySelector('a-scene').components.screenshot;
@@ -72,7 +74,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <template v-if="photoCamStore.getCamsStatus()">
+    <template v-if="!photoCamStore.getCamsStatus()">
         <a-entity
             :id="id"
             geometry="primitive: box; depth: 0.2; height: 0.2; width: 0.32"

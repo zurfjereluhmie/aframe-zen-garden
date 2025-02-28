@@ -212,7 +212,7 @@ watch(
         src="#character"
         :position="position"
         :rotation="rotation"
-        scale="1.2 1.2 1.2"
+        scale="1 1 1"
         :look-at_horizon="`enabled: ${lookAtCamera}; target: ${lookAtTarget}`"
         emit-when-near="target: #head;distance: 3; event: close; eventFar: far"
         @close="handleClose()"

@@ -4,6 +4,7 @@ import { store } from '../stores/carryStore.js';
 import { store as photoCamStore } from '../stores/photoCamStore.js';
 import '../aframe/clickable.js';
 import '../aframe/event-set.js';
+import '../aframe/look-at.js';
 import '../aframe/look-at_horizon.js';
 import '../aframe/emit-when-near.js';
 
@@ -41,14 +42,32 @@ const flowerGiven = ref(false);
 const dialog = ref(0);
 const dialogQueue = ref([]);
 const done = ref(false);
+const photoCamDropped = ref(false);
+const photoCamTaken = ref(false);
+const lookAtTarget = ref('#head');
 
 const lookAtCamera = computed(() => {
-    return !done.value && (isSpeaking.value || isClose.value);
+    return isSpeaking.value || isClose.value;
 });
+
+const playAnimation = (clip, duration) => {
+    character.value.setAttribute('animation-mixer', {
+        clip,
+        loop: 'once',
+    });
+    setTimeout(() => {
+        character.value.setAttribute('animation-mixer', {
+            clip: 'CharacterArmature|Idle',
+            loop: 'repeat',
+        });
+    }, duration);
+};
 
 const handleClose = (event) => {
     isClose.value = true;
+    if (photoCamDropped.value) return;
     if (dialog.value === 0) {
+        playAnimation('CharacterArmature|Wave', 1666.6666269302368);
         dialogQueue.value.push(...DIALOGS.introduction);
         dialog.value++;
         nextDialog();
@@ -90,12 +109,15 @@ const nextDialog = (event) => {
         }
         return;
     }
+    if (photoCamDropped.value) return;
     const dialogId = dialogQueue.value.shift();
     soundElt.value.setAttribute('src', `#${dialogId}`);
     isSpeaking.value = true;
 };
 
 const handleFlowerGive = (event) => {
+    if (!canTakeFlower.value) return;
+    playAnimation('CharacterArmature|Interact', 1250);
     const flower = store.getCarryItem();
     const flowerDOM = document.querySelector(`#${flower.details.flowerId}`);
     const scene = document.querySelector('a-scene');
@@ -104,13 +126,59 @@ const handleFlowerGive = (event) => {
         scene.systems['simple-grab'].removeCurrentGrab(hand, flowerDOM);
     }
     flowerDOM.parentNode?.removeChild(flowerDOM);
+    store.clearCarryItem();
     flowerGiven.value = true;
 };
 
 const handleEnd = (newVal) => {
+    canTakeFlower.value = false;
+
+    playAnimation('CharacterArmature|Interact', 1250);
+    lookAtTarget.value = '#character-stool';
     photoCamStore.setShowPhotoCam(true);
-    // TODO: Make the character leave
+    photoCamDropped.value = true;
+    setTimeout(() => {
+        lookAtTarget.value = '#head';
+    }, 1250);
 };
+
+const leaveAnimation = () => {
+    playAnimation('CharacterArmature|Wave', 1666.6666269302368);
+    setTimeout(() => {
+        character.value.removeAttribute('look-at_horizon');
+        character.value.setAttribute('animation', {
+            property: 'rotation',
+            to: '0 180 0',
+            dur: 500,
+            easing: 'linear',
+        });
+        setTimeout(() => {
+            character.value.setAttribute('animation-mixer', {
+                clip: 'CharacterArmature|Walk',
+                loop: 'repeat',
+            });
+            character.value.setAttribute('animation', {
+                property: 'position',
+                to: '-6.5 0 -12',
+                dur: 5000,
+                easing: 'linear',
+            });
+            setTimeout(() => {
+                character.value.parentNode?.removeChild(character.value);
+            }, 5000);
+        }, 500);
+    }, 1666.6666269302368);
+};
+
+watch(
+    () => store.getCarryItem(),
+    (newVal) => {
+        if (newVal?.itemName === 'photoCam') {
+            photoCamTaken.value = true;
+            leaveAnimation();
+        }
+    }
+);
 
 watch(
     () => flowerGiven.value,
@@ -144,14 +212,14 @@ watch(
         src="#character"
         :position="position"
         :rotation="rotation"
-        scale="0.7 0.7 0.7"
-        :look-at_horizon="`enabled: ${lookAtCamera}`"
-        emit-when-near="distance: 3; event: close; eventFar: far"
+        scale="1.2 1.2 1.2"
+        :look-at_horizon="`enabled: ${lookAtCamera}; target: ${lookAtTarget}`"
+        emit-when-near="target: #head;distance: 3; event: close; eventFar: far"
         @close="handleClose()"
         @far="handleFar()"
         :clickable="canTakeFlower ? '' : null"
         @click="handleFlowerGive($event)"
-        animation-mixer="clip: Idle; loop: repeat"
+        animation-mixer="clip: CharacterArmature|Idle; loop: repeat"
     >
         <a-sound
             ref="sound-elt"

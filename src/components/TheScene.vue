@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { store } from '../stores/carryStore.js';
 import { store as flowersStore } from '../stores/flowersStore.js';
 import TheCameraRig from './TheCameraRig.vue';
 
@@ -19,19 +20,39 @@ import AppWaterCanPlaceholder from './AppWaterCanPlaceholder.vue';
 import TheSun from './TheSun.vue';
 import TheMoon from './TheMoon.vue';
 import TheCharacter from './TheCharacter.vue';
+import ThePhotoCam from './ThePhotoCam.vue';
+import ThePictureDisplay from './ThePictureDisplay.vue';
+import AppStool from './AppStool.vue';
 
 const allAssetsLoaded = ref(false);
 const DAY_DURATION = 100000;
 const ENABLE_SUN_NIGHT_CYCLE = false;
+const screenshotCameraSelector = ref('#head');
+const renderOutline = ref(false);
+
+watch(
+    () => store.getCarryItem(),
+    (newCarryItem) => {
+        if (newCarryItem && newCarryItem.itemName === 'photoCam') {
+            renderOutline.value = false;
+            screenshotCameraSelector.value = `#${newCarryItem.details.id} [camera]`;
+        } else {
+            renderOutline.value = true;
+            screenshotCameraSelector.value = '#head';
+        }
+    }
+);
 </script>
 
 <template>
+    <!-- The outline is still experimental, thus break the screenshot so we need to disable it whenever the user hold the camera -->
     <a-scene
         obb-collider="showColliders: false"
         stats
         fog="type: linear; color: #a3d0ed; near: 30; far: 60"
         background="color: #a3d0ed;"
-        outline="color: red; strength: 20"
+        :outline="renderOutline ? 'color: red; strength: 20' : null"
+        :screenshot="`camera: ${screenshotCameraSelector}; width: 1920; height: 1080;`"
     >
         <a-assets @loaded="allAssetsLoaded = true">
             <!-- SOUNDS -->
@@ -124,7 +145,19 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
             <a-asset-item id="market" src="./assets/market.glb"></a-asset-item>
             <a-asset-item
                 id="character"
-                src="./assets/character.glb"
+                src="./assets/adventurer.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="picture-board"
+                src="./assets/tools/picture-board.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="picture-pin"
+                src="./assets/tools/picture-pin.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="stool"
+                src="./assets/tools/stool-normal.glb"
             ></a-asset-item>
             <a-asset-item
                 id="backpack"
@@ -207,6 +240,10 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
                 id="tool-water-can"
                 src="./assets/tools/water-can.glb"
             ></a-asset-item>
+            <a-asset-item
+                id="tool-photo-camera"
+                src="./assets/tools/photoCamera-normal.glb"
+            ></a-asset-item>
             <!-- END MODELS -->
         </a-assets>
 
@@ -225,7 +262,18 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
                 ></a-entity>
             </template>
 
+            <ThePhotoCam
+                position="-5.2 0.75 -2"
+                rotation="0 180 0"
+            ></ThePhotoCam>
+
             <TheCharacter position="-6.5 0 -2"></TheCharacter>
+            <AppStool id="character-stool" position="-5.2 0 -2"></AppStool>
+
+            <ThePictureDisplay
+                position="-12 0 3"
+                rotation="0 90 0"
+            ></ThePictureDisplay>
 
             <template v-for="flower in flowersStore.getFlowers()">
                 <AppFlower
@@ -261,6 +309,7 @@ const ENABLE_SUN_NIGHT_CYCLE = false;
             <AppPlantingZone position="-5 0 7"></AppPlantingZone>
             <AppPlantingZone position="-5 0 8"></AppPlantingZone>
 
+            <!-- TODO: REMOVE -->
             <a-entity id="debug-items" position="0 0 0">
                 <AppPot position="0 1 0" type="high"></AppPot>
                 <!-- <a-box position="0 0.5 0"></a-box> -->

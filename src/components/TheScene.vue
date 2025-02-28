@@ -21,6 +21,8 @@ import TheSun from './TheSun.vue';
 import TheMoon from './TheMoon.vue';
 import TheCharacter from './TheCharacter.vue';
 import ThePhotoCam from './ThePhotoCam.vue';
+import ThePictureDisplay from './ThePictureDisplay.vue';
+import AppStool from './AppStool.vue';
 
 const allAssetsLoaded = ref(false);
 const DAY_DURATION = 100000;
@@ -50,7 +52,7 @@ watch(
         fog="type: linear; color: #a3d0ed; near: 30; far: 60"
         background="color: #a3d0ed;"
         :outline="renderOutline ? 'color: red; strength: 20' : null"
-        :screenshot="`camera: ${screenshotCameraSelector};`"
+        :screenshot="`camera: ${screenshotCameraSelector}; width: 1920; height: 1080;`"
     >
         <a-assets @loaded="allAssetsLoaded = true">
             <!-- SOUNDS -->
@@ -143,7 +145,19 @@ watch(
             <a-asset-item id="market" src="./assets/market.glb"></a-asset-item>
             <a-asset-item
                 id="character"
-                src="./assets/character.glb"
+                src="./assets/adventurer.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="picture-board"
+                src="./assets/tools/picture-board.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="picture-pin"
+                src="./assets/tools/picture-pin.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="stool"
+                src="./assets/tools/stool-normal.glb"
             ></a-asset-item>
             <a-asset-item
                 id="backpack"
@@ -248,9 +262,18 @@ watch(
                 ></a-entity>
             </template>
 
-            <ThePhotoCam position="3 1.65 0"></ThePhotoCam>
+            <ThePhotoCam
+                position="-5.2 0.75 -2"
+                rotation="0 180 0"
+            ></ThePhotoCam>
 
             <TheCharacter position="-6.5 0 -2"></TheCharacter>
+            <AppStool id="character-stool" position="-5.2 0 -2"></AppStool>
+
+            <ThePictureDisplay
+                position="-12 0 3"
+                rotation="0 90 0"
+            ></ThePictureDisplay>
 
             <template v-for="flower in flowersStore.getFlowers()">
                 <AppFlower
@@ -286,6 +309,7 @@ watch(
             <AppPlantingZone position="-5 0 7"></AppPlantingZone>
             <AppPlantingZone position="-5 0 8"></AppPlantingZone>
 
+            <!-- TODO: REMOVE -->
             <a-entity id="debug-items" position="0 0 0">
                 <AppPot position="0 1 0" type="high"></AppPot>
                 <!-- <a-box position="0 0.5 0"></a-box> -->

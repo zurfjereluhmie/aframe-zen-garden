@@ -227,15 +227,71 @@ function enterScene() {
                         </dd>
                         <dt>
                             <a
-                                href="https://poly.pizza/m/DgOCW9ZCRJ"
+                                href="https://poly.pizza/m/5EGWBMpuXq"
                                 target="_blank"
-                                >Character Animated</a
+                                >Adventurer</a
+                            >
+                        </dt>
+                        <dd>by Quaternius</dd>
+                        <dt>
+                            <a
+                                href="https://poly.pizza/m/dZpKQs9NgKE"
+                                target="_blank"
+                                >Thumbtack</a
                             >
                         </dt>
                         <dd>
-                            by Quaternius via
+                            by Kevin Lim under
                             <a
-                                href="https://poly.pizza/m/DgOCW9ZCRJ"
+                                href="https://creativecommons.org/licenses/by/3.0/"
+                                target="_blank"
+                                >CC-BY</a
+                            >
+                            via
+                            <a
+                                href="https://poly.pizza/m/dZpKQs9NgKE"
+                                target="_blank"
+                                >Poly Pizza</a
+                            >
+                        </dd>
+                        <dt>
+                            <a
+                                href="https://poly.pizza/m/SpRHK36gNl"
+                                target="_blank"
+                                >Wooden Sign</a
+                            >
+                        </dt>
+                        <dd>
+                            by iPoly3D under
+                            <a
+                                href="https://creativecommons.org/licenses/by/3.0/"
+                                target="_blank"
+                                >CC-BY</a
+                            >
+                            via
+                            <a
+                                href="https://poly.pizza/m/SpRHK36gNl"
+                                target="_blank"
+                                >Poly Pizza</a
+                            >
+                        </dd>
+                        <dt>
+                            <a
+                                href="https://poly.pizza/m/dn419U6vWYx"
+                                target="_blank"
+                                >Wooden Stool</a
+                            >
+                        </dt>
+                        <dd>
+                            by Jarlan Perez under
+                            <a
+                                href="https://creativecommons.org/licenses/by/3.0/"
+                                target="_blank"
+                                >CC-BY</a
+                            >
+                            via
+                            <a
+                                href="https://poly.pizza/m/dn419U6vWYx"
                                 target="_blank"
                                 >Poly Pizza</a
                             >

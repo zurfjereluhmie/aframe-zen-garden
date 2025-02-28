@@ -24,9 +24,16 @@ const isVR = ref(false);
 const takenPosition = computed(() => (isVR.value ? '0 0 0' : '0.01 -0.3 -0.5'));
 
 const takeAPhoto = () => {
-    console.log('Take a photo');
     const screenshot = document.querySelector('a-scene').components.screenshot;
-    screenshot.capture('perspective');
+    const canvas = screenshot.getCanvas('perspective');
+
+    canvas.toBlob((blob) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+            photoCamStore.addPictureUrl(reader.result);
+        };
+    }, 'image/png');
 };
 
 watch(
@@ -37,8 +44,6 @@ watch(
             document
                 .querySelector('#hand-right')
                 .addEventListener('buttondown', (event) => {
-                    console.log(event);
-
                     if (store.getCarryItem()?.itemName === 'photoCam') {
                         takeAPhoto();
                     }
@@ -67,8 +72,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <!-- Invert after debug is done -->
-    <template v-if="!photoCamStore.getCamsStatus()">
+    <template v-if="photoCamStore.getCamsStatus()">
         <a-entity
             :id="id"
             geometry="primitive: box; depth: 0.2; height: 0.2; width: 0.32"

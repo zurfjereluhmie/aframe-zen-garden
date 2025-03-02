@@ -1,18 +1,39 @@
 <p align="center">
-    <img src="./logo.svg" alt="VAV Logo" align="center"/>
-    X
-    <img src="./GreenGrow.svg" alt="VAV Logo" align="center"/>
+    <a href="https://zurfjereluhmie.github.io/aframe-zen-garden/">
+        <img src="./GreenGrow.svg" alt="GreenGrow Logo" align="center"/>
+    </a>
+        <span>X</span>
+    <a href="https://github.com/Chabloz/a-frame-vite-vue-boilerplate">
+        <img src="./logo.svg" alt="VAV Logo" align="center"/>
+    </a>
 </p>
 <h1 align="center">GrenGrow</h1>
+<h2 align="center">🌿 Interactive VR Garden</h2>
 
-> Vue 3.5, A-Frame 1.7, and Vite 5.0
+<div align="center">
+    <img src="https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D" alt="Vue.js"/>
+    <img src="https://img.shields.io/badge/A%E2%80%93Frame-1.7-brightgreen?style=for-the-badge&labelColor=%23ef2d5e&color=%23ef2d5e" alt="A-Frame"/>
+    <img src="https://img.shields.io/badge/threejs-black?style=for-the-badge&logo=three.js&logoColor=white" alt="Threejs"/>
+    <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" alt="Vite"/>
+</div>
 
-![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
-![A-Frame](https://img.shields.io/badge/A%E2%80%93Frame-1.7-brightgreen?style=for-the-badge&labelColor=%23ef2d5e&color=%23ef2d5e)
-![Threejs](https://img.shields.io/badge/threejs-black?style=for-the-badge&logo=three.js&logoColor=white)
-![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+<br>
 
-### [>> DEMO <<](https://onivers.com/aframe-vue-boilerplate/)
+<a href="https://zurfjereluhmie.github.io/aframe-zen-garden/">
+    <p align="center">🚀 DEMO</p>
+</a>
+
+---
+
+A zen virtual reality environment built with A-Frame, where users can plant, water, and watch their own plants grow. An immersive and relaxing experience with VR interactions.
+
+## 🎮 Features
+
+- 🌱 Interactive Gardening: Dig, plant seeds, and watch them grow.
+- 💧 Watering System: Use a watering can to help plants grow.
+- 🧍 NPC & Trading: Give a flower to a character to receive a camera in exchange.
+- 🌸 Zen Ambiance: Create your own flower shelf
+- 📸 Pictures: Take pictures of your creations
 
 ## Movement modes support
 
@@ -29,7 +50,7 @@
 ### Clone (or fork, or download)
 
 ```sh
-git clone https://github.com/Chabloz/a-frame-vite-vue-boilerplate.git .
+git clone https://github.com/zurfjereluhmie/aframe-zen-garden .
 ```
 
 ### Install dependencies

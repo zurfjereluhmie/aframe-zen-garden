@@ -26,16 +26,21 @@ const takenPosition = computed(() =>
 );
 
 const takeAPhoto = () => {
-    const screenshot = document.querySelector('a-scene').components.screenshot;
-    const canvas = screenshot.getCanvas('perspective');
+    photoCamStore.setIsTakingPicture(true);
+    setTimeout(() => {
+        const screenshot =
+            document.querySelector('a-scene').components.screenshot;
+        const canvas = screenshot.getCanvas('perspective');
 
-    canvas.toBlob((blob) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-            photoCamStore.addPictureUrl(reader.result);
-        };
-    }, 'image/png');
+        canvas.toBlob((blob) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = () => {
+                photoCamStore.addPictureUrl(reader.result);
+                photoCamStore.setIsTakingPicture(false);
+            };
+        }, 'image/png');
+    }, 1);
 };
 
 watch(
@@ -68,7 +73,7 @@ watch(
 </script>
 
 <template>
-    <template v-if="photoCamStore.getCamsStatus()">
+    <template v-if="!photoCamStore.getCamsStatus()">
         <a-entity
             :id="id"
             geometry="primitive: box; depth: 0.2; height: 0.2; width: 0.32"
@@ -97,7 +102,7 @@ watch(
                     material="opacity: 1; color: white"
                     position="-0.007 -0.017 0.0559"
                 ></a-entity>
-                <a-entity position="0 0 -0.12">
+                <a-entity position="0 0 -0.13">
                     <a-entity
                         :id="`${id}-camera`"
                         :secondary-camera="`

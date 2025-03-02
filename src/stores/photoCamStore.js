@@ -3,9 +3,16 @@ import { generateId } from '../utils/idGenerator';
 
 export const store = reactive({
     isCamVisible: false,
+    isTakingPicture: false,
     picturesUrl: [],
     getCamsStatus() {
         return store.isCamVisible;
+    },
+    getIsTakingPicture() {
+        return store.isTakingPicture;
+    },
+    setIsTakingPicture(status) {
+        store.isTakingPicture = status;
     },
     setShowPhotoCam(status) {
         store.isCamVisible = status;

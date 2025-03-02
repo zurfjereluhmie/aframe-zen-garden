@@ -3,8 +3,9 @@ import { onMounted, ref, watch } from 'vue';
 import { store } from '../stores/carryStore.js';
 import { store as vrStore } from '../stores/vrStore.js';
 import { store as flowersStore } from '../stores/flowersStore.js';
-import TheCameraRig from './TheCameraRig.vue';
+import { store as photoCamStore } from '../stores/photoCamStore.js';
 
+import TheCameraRig from './TheCameraRig.vue';
 import TheFloor from './TheFloor.vue';
 import AppPot from './AppPot.vue';
 import AppFlower from './AppFlower.vue';
@@ -12,8 +13,6 @@ import AppLamp from './AppLamp.vue';
 import TheShelf from './TheShelf.vue';
 import TheRiver from './TheRiver.vue';
 import TheMarket from './TheMarket.vue';
-
-import '../aframe/outline.js';
 import TheBackPack from './TheBackPack.vue';
 import AppPlantingZone from './AppPlantingZone.vue';
 import TheWaterCan from './TheWaterCan.vue';
@@ -24,6 +23,9 @@ import TheCharacter from './TheCharacter.vue';
 import ThePhotoCam from './ThePhotoCam.vue';
 import ThePictureDisplay from './ThePictureDisplay.vue';
 import AppStool from './AppStool.vue';
+import AppPhotoCamPlaceholder from './AppPhotoCamPlaceholder.vue';
+
+import '../aframe/outline.js';
 
 const allAssetsLoaded = ref(false);
 const DAY_DURATION = 100000;
@@ -32,16 +34,16 @@ const screenshotCameraSelector = ref('#head');
 const renderOutline = ref(false);
 
 watch(
-    () => store.getCarryItem(),
-    (newCarryItem) => {
+    () => [store.getCarryItem(), photoCamStore.getIsTakingPicture()],
+    ([newCarryItem, isTakingPicture]) => {
         if (newCarryItem && newCarryItem.itemName === 'photoCam') {
-            renderOutline.value = false;
             screenshotCameraSelector.value = `#${newCarryItem.details.id} [camera]`;
         } else {
-            renderOutline.value = true;
             screenshotCameraSelector.value = '#head';
         }
-    }
+        renderOutline.value = !isTakingPicture;
+    },
+    { immediate: true }
 );
 
 onMounted(() => {
@@ -279,6 +281,11 @@ onMounted(() => {
 
             <TheCharacter position="-6.5 0 -2"></TheCharacter>
             <AppStool id="character-stool" position="-5.2 0 -2"></AppStool>
+            <AppPhotoCamPlaceholder
+                position="-5.2 0.74 -2"
+                rotation="0 180 0"
+                :size="{ width: 0.45, height: 0.1, depth: 0.45 }"
+            ></AppPhotoCamPlaceholder>
 
             <ThePictureDisplay
                 position="-12 0 3"

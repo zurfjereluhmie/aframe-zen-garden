@@ -33,7 +33,7 @@ watch(
     () => store.getCarryItem(),
     (newCarryItem) => {
         if (!newCarryItem) {
-            if (store.getPreviousCarryItem().itemName === 'pot') {
+            if (store.getPreviousCarryItem()?.itemName === 'pot') {
                 placeholder.value.removeAttribute('clickable');
                 placeholder.value.removeAttribute('simple-grab-drop-zone');
             }

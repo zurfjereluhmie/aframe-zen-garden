@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { store } from '../stores/vrStore.js';
 
 defineProps({
     position: {
@@ -12,12 +13,8 @@ defineProps({
     },
 });
 
-const hitboxPosition = ref('8.5 1 6');
-onMounted(() => {
-    document.querySelector('a-scene').addEventListener('enter-vr', () => {
-        console.log('entering VR');
-        hitboxPosition.value = '8 -0.2 6';
-    });
+const hitboxPosition = computed(() => {
+    return store.getVR() ? '8 -0.2 6' : '8.5 1 6';
 });
 </script>
 

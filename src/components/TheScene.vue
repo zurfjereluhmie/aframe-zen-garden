@@ -1,6 +1,7 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { store } from '../stores/carryStore.js';
+import { store as vrStore } from '../stores/vrStore.js';
 import { store as flowersStore } from '../stores/flowersStore.js';
 import TheCameraRig from './TheCameraRig.vue';
 
@@ -42,12 +43,21 @@ watch(
         }
     }
 );
+
+onMounted(() => {
+    document.querySelector('a-scene').addEventListener('enter-vr', () => {
+        vrStore.setVR(true);
+    });
+    document.querySelector('a-scene').addEventListener('exit-vr', () => {
+        vrStore.setVR(false);
+    });
+});
 </script>
 
 <template>
     <!-- The outline is still experimental, thus break the screenshot so we need to disable it whenever the user hold the camera -->
     <a-scene
-        obb-collider="showColliders: false"
+        obb-collider="showColliders: true"
         stats
         fog="type: linear; color: #a3d0ed; near: 30; far: 60"
         background="color: #a3d0ed;"
@@ -310,7 +320,7 @@ watch(
             <AppPlantingZone position="-5 0 8"></AppPlantingZone>
 
             <!-- TODO: REMOVE -->
-            <a-entity id="debug-items" position="0 0 0">
+            <a-entity id="debug-items" position="0 0 0" v-if="false">
                 <AppPot position="0 1 0" type="high"></AppPot>
                 <!-- <a-box position="0 0.5 0"></a-box> -->
                 <AppLamp position="2 0 0.15"></AppLamp>

@@ -1,7 +1,8 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
-import { store as photoCamStore } from '../stores/photoCamStore.js';
+import { computed, watch } from 'vue';
 import { store } from '../stores/carryStore.js';
+import { store as photoCamStore } from '../stores/photoCamStore.js';
+import { store as vrStore } from '../stores/vrStore.js';
 import { generateId } from '../utils/idGenerator.js';
 import '../aframe/clickable.js';
 import '../aframe/simple-grab.js';
@@ -20,9 +21,8 @@ defineProps({
 });
 
 const id = generateId('camera');
-const isVR = ref(false);
 const takenPosition = computed(() =>
-    isVR.value ? '-0.15 0 0' : '0.01 -0.3 -0.5'
+    vrStore.getVR() ? '-0.15 0 0' : '0.01 -0.3 -0.5'
 );
 
 const takeAPhoto = () => {
@@ -39,7 +39,7 @@ const takeAPhoto = () => {
 };
 
 watch(
-    () => isVR.value,
+    () => vrStore.getVR(),
     (value) => {
         if (value) {
             // VR mode
@@ -65,16 +65,10 @@ watch(
     },
     { immediate: true }
 );
-
-onMounted(() => {
-    document.querySelector('a-scene').addEventListener('enter-vr', () => {
-        isVR.value = true;
-    });
-});
 </script>
 
 <template>
-    <template v-if="!photoCamStore.getCamsStatus()">
+    <template v-if="photoCamStore.getCamsStatus()">
         <a-entity
             :id="id"
             geometry="primitive: box; depth: 0.2; height: 0.2; width: 0.32"

@@ -308,7 +308,7 @@ h1 {
     font-size: 1.5rem;
 }
 a {
-    color: #eee;
+    color: #d8ffe8;
     text-decoration: none;
 }
 .licences {
@@ -331,12 +331,13 @@ a {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #333;
-    color: #ccc;
+    background-color: #0c3016;
+    color: #eefff4;
     width: 100vw;
     height: 100vh;
     padding: 1rem;
-    font-family: monospace;
+    font-family: 'Poppins', monospace;
+    letter-spacing: 0.05rem;
     z-index: 10000;
     overflow: auto;
 }

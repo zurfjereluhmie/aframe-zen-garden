@@ -97,7 +97,7 @@ watch(
                     material="opacity: 1; color: white"
                     position="-0.007 -0.017 0.0559"
                 ></a-entity>
-                <a-entity position="0 0 -0.2">
+                <a-entity position="0 0 -0.12">
                     <a-entity
                         :id="`${id}-camera`"
                         :secondary-camera="`

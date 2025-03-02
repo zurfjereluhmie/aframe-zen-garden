@@ -2,6 +2,7 @@
 import { ref, useTemplateRef, watch } from 'vue';
 import { store } from '../stores/carryStore.js';
 import { store as flowersStore } from '../stores/flowersStore.js';
+import { store as vrStore } from '../stores/vrStore.js';
 import { generateId } from '../utils/idGenerator.js';
 import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
@@ -22,6 +23,7 @@ defineProps({
 const model = useTemplateRef('model');
 const zoneId = generateId('planting-zone');
 const zones = ref(Array.from({ length: 8 }, (_, i) => null));
+const isACollision = ref(false);
 
 const handleDrop = (event, detail) => {
     store.clearCarryItem();
@@ -73,6 +75,28 @@ const handleClickWatering = (event, detail) => {
 
         return;
     }
+};
+
+const handleCollision = (event, detail) => {
+    if (isACollision.value) return; // Prevent multiple collision events
+    isACollision.value = true;
+
+    const itemName = store.getCarryItem()?.itemName;
+    if (!itemName) {
+        isACollision.value = false;
+        return;
+    }
+    if (itemName !== 'waterCan') {
+        isACollision.value = false;
+        return;
+    }
+
+    const collidedZone = model.value.querySelector(
+        `a-box:nth-child(${detail.index + 1})`
+    );
+
+    collidedZone.click(); // triggers the handleClickWatering method
+    isACollision.value = false;
 };
 
 watch(
@@ -132,6 +156,16 @@ watch(
                 @drop="handleDrop($event, { index: i - 1 })"
                 @click="handleClickWatering($event, { index: i - 1 })"
             >
+                <a-entity
+                    v-if="vrStore.getVR()"
+                    geometry="primitive: box; width: 0.99; height: 0.2; depth: 0.7"
+                    material="opacity: 0"
+                    position="0 0.05 0"
+                    obb-collider
+                    @obbcollisionstarted="
+                        handleCollision($event, { index: i - 1 })
+                    "
+                ></a-entity>
                 <template v-if="zones[i - 1]">
                     <a-gltf-model
                         v-if="zones[i - 1].hydratationLevel === 1"

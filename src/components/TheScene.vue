@@ -151,6 +151,10 @@ onMounted(() => {
                 id="walking-with-watercan-full-sound"
                 src="./assets/sounds/sfx-walking-watercan-full.mp3"
             ></audio>
+            <audio
+                id="picture-taken"
+                src="./assets/sounds/sfx-picture.mp3"
+            ></audio>
             <!-- END SFX -->
             <!-- END SOUNDS -->
 

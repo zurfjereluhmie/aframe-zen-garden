@@ -1,5 +1,5 @@
 <script setup>
-import { computed, watch } from 'vue';
+import { computed, useTemplateRef, watch } from 'vue';
 import { store } from '../stores/carryStore.js';
 import { store as photoCamStore } from '../stores/photoCamStore.js';
 import { store as vrStore } from '../stores/vrStore.js';
@@ -21,12 +21,14 @@ defineProps({
 });
 
 const id = generateId('camera');
+const pictureSound = useTemplateRef('picture-sound');
 const takenPosition = computed(() =>
     vrStore.getVR() ? '-0.15 0 0' : '0.01 -0.3 -0.5'
 );
 
 const takeAPhoto = () => {
     photoCamStore.setIsTakingPicture(true);
+    pictureSound.value.components.sound.playSound();
     setTimeout(() => {
         const screenshot =
             document.querySelector('a-scene').components.screenshot;
@@ -96,6 +98,11 @@ watch(
                 :event-set__taken_position="`event: taken; attribute: position; value: ${takenPosition}`"
                 event-set__untaken_position="event: untaken; attribute: position; value: 0.01 0 0.04"
             >
+                <a-sound
+                    ref="picture-sound"
+                    src="#picture-taken"
+                    positional="true"
+                ></a-sound>
                 <a-entity
                     :id="`${id}-screen`"
                     geometry="primitive: plane; width: 0.28; height: 0.09"

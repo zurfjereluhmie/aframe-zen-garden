@@ -14,7 +14,7 @@ defineProps({
 });
 
 const hitboxPosition = computed(() => {
-    return store.getVR() ? '8 -0.2 6' : '8.5 1 6';
+    return store.getVR() ? '8 -0.2 6' : '7.8 0 5.9';
 });
 </script>
 

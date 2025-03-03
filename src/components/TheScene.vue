@@ -4,6 +4,7 @@ import { store } from '../stores/carryStore.js';
 import { store as vrStore } from '../stores/vrStore.js';
 import { store as flowersStore } from '../stores/flowersStore.js';
 import { store as photoCamStore } from '../stores/photoCamStore.js';
+import { store as potsStore } from '../stores/potsStore.js';
 
 import TheCameraRig from './TheCameraRig.vue';
 import TheFloor from './TheFloor.vue';
@@ -172,6 +173,10 @@ onMounted(() => {
                 src="./assets/tools/stool-normal.glb"
             ></a-asset-item>
             <a-asset-item
+                id="flower-display"
+                src="./assets/flower-display.glb"
+            ></a-asset-item>
+            <a-asset-item
                 id="backpack"
                 src="./assets/tools/backpack.glb"
             ></a-asset-item>
@@ -300,13 +305,11 @@ onMounted(() => {
                 ></AppFlower>
             </template>
 
-            <TheShelf position="5.726 0 -2" rotation="0 -45 0">
-                <AppPot position="-0.741 0.520 -0.023" type="big"></AppPot>
-                <AppPot position="0.600 0.829 -0.018" type="big"></AppPot>
-                <AppPot position="0.194 1.855 -0.027" type="big"></AppPot>
-                <AppPot position="0.194 0.855 -0.027" type="small"></AppPot>
-                <AppPot position="0.194 0.113 -0.027" type="high"></AppPot>
-            </TheShelf>
+            <template v-for="(pot, index) in potsStore.getPots()" :key="index">
+                <AppPot :position="pot.position" :type="pot.type"></AppPot>
+            </template>
+
+            <TheShelf position="5 0 -3" rotation="0 -55 0"></TheShelf>
 
             <TheRiver position="0 0.2 0"></TheRiver>
 
@@ -320,14 +323,14 @@ onMounted(() => {
                 ></AppWaterCanPlaceholder>
             </TheMarket>
 
-            <TheBackPack position="0 0 -5"></TheBackPack>
+            <!-- <TheBackPack position="0 0 -5"></TheBackPack> -->
 
             <AppPlantingZone position="-5 0 6"></AppPlantingZone>
             <AppPlantingZone position="-5 0 7"></AppPlantingZone>
             <AppPlantingZone position="-5 0 8"></AppPlantingZone>
 
             <!-- TODO: REMOVE -->
-            <a-entity id="debug-items" position="0 0 0" v-if="false">
+            <a-entity id="debug-items" position="0 0 0" v-if="true">
                 <AppPot position="0 1 0" type="high"></AppPot>
                 <!-- <a-box position="0 0.5 0"></a-box> -->
                 <AppLamp position="2 0 0.15"></AppLamp>

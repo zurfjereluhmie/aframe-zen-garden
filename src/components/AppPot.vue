@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, useTemplateRef } from 'vue';
 import { store } from '../stores/carryStore.js';
+import { store as potsStore } from '../stores/potsStore.js';
 import { generateId } from '../utils/idGenerator.js';
 import '../aframe/simple-grab.js';
 import '../aframe/clickable.js';
@@ -70,6 +71,14 @@ const handleGrab = (event) => {
         pot: outerHitbox.value,
         droppedEl: droppedEl.value,
     });
+
+    const { x, y, z } = event.detail.el.object3D.position;
+    setTimeout(() => {
+        potsStore.addPot({
+            type: event.detail.el.dataset.type,
+            position: `${x} ${y} ${z}`,
+        });
+    }, 2000);
 };
 
 watch(
@@ -103,6 +112,7 @@ watch(
         material="visible: false;"
         :position="position"
         :id="potId"
+        :data-type="type"
         @grab="handleGrab($event)"
     >
         <a-gltf-model

@@ -17,13 +17,18 @@ defineProps({
     <a-gltf-model
         :position="position"
         :rotation="rotation"
-        ref="lamp"
-        src="#shelf"
-        scale="1 1 1"
+        src="#flower-display"
+        scale="1.5 1.5 1.5"
     >
         <slot></slot>
-        <AppPotPlaceholder position="-0.278 1.381 -0.031"></AppPotPlaceholder>
-        <AppPotPlaceholder position="-0.278 0.831 -0.031"></AppPotPlaceholder>
+        <AppPotPlaceholder position="-0.44 0.88 -0.47"></AppPotPlaceholder>
+        <AppPotPlaceholder position="-0.44 0.42 0"></AppPotPlaceholder>
+        <AppPotPlaceholder position="-0.15 0.88 -0.47"></AppPotPlaceholder>
+        <AppPotPlaceholder position="-0.15 0.42 0"></AppPotPlaceholder>
+        <AppPotPlaceholder position="0.14 0.88 -0.47"></AppPotPlaceholder>
+        <AppPotPlaceholder position="0.14 0.42 0"></AppPotPlaceholder>
+        <AppPotPlaceholder position="0.43 0.88 -0.47"></AppPotPlaceholder>
+        <AppPotPlaceholder position="0.43 0.42 0"></AppPotPlaceholder>
     </a-gltf-model>
 </template>
 

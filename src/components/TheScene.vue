@@ -4,6 +4,7 @@ import { store } from '../stores/carryStore.js';
 import { store as vrStore } from '../stores/vrStore.js';
 import { store as flowersStore } from '../stores/flowersStore.js';
 import { store as photoCamStore } from '../stores/photoCamStore.js';
+import { store as potsStore } from '../stores/potsStore.js';
 
 import TheCameraRig from './TheCameraRig.vue';
 import TheFloor from './TheFloor.vue';
@@ -26,6 +27,8 @@ import AppStool from './AppStool.vue';
 import AppPhotoCamPlaceholder from './AppPhotoCamPlaceholder.vue';
 
 import '../aframe/outline.js';
+import TheNavigationMesh from './TheNavigationMesh.vue';
+import TheWind from './TheWind.vue';
 
 const allAssetsLoaded = ref(false);
 const DAY_DURATION = 100000;
@@ -60,7 +63,7 @@ onMounted(() => {
     <!-- The outline is still experimental, thus break the screenshot so we need to disable it whenever the user hold the camera -->
     <a-scene
         obb-collider="showColliders: false"
-        stats
+        _stats
         fog="type: linear; color: #a3d0ed; near: 30; far: 60"
         background="color: #a3d0ed;"
         :outline="renderOutline ? 'color: red; strength: 20' : null"
@@ -149,12 +152,25 @@ onMounted(() => {
                 id="walking-with-watercan-full-sound"
                 src="./assets/sounds/sfx-walking-watercan-full.mp3"
             ></audio>
+            <audio
+                id="picture-taken"
+                src="./assets/sounds/sfx-picture.mp3"
+            ></audio>
+            <audio
+                id="dirt-planting"
+                src="./assets/sounds/sfx-dirt-planting.mp3"
+            ></audio>
+            <audio id="wind" src="./assets/sounds/sfx-wind.mp3"></audio>
             <!-- END SFX -->
             <!-- END SOUNDS -->
 
             <!-- MODELS -->
             <a-asset-item id="scene" src="./assets/scene.glb"></a-asset-item>
             <a-asset-item id="market" src="./assets/market.glb"></a-asset-item>
+            <a-asset-item
+                id="navigation-mesh"
+                src="./assets/navigation-meshes/navigation-mesh.glb"
+            ></a-asset-item>
             <a-asset-item
                 id="character"
                 src="./assets/adventurer.glb"
@@ -170,6 +186,10 @@ onMounted(() => {
             <a-asset-item
                 id="stool"
                 src="./assets/tools/stool-normal.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="flower-display"
+                src="./assets/flower-display.glb"
             ></a-asset-item>
             <a-asset-item
                 id="backpack"
@@ -274,6 +294,8 @@ onMounted(() => {
                 ></a-entity>
             </template>
 
+            <TheWind></TheWind>
+
             <ThePhotoCam
                 position="-5.2 0.75 -2"
                 rotation="0 180 0"
@@ -300,13 +322,15 @@ onMounted(() => {
                 ></AppFlower>
             </template>
 
-            <TheShelf position="5.726 0 -2" rotation="0 -45 0">
-                <AppPot position="-0.741 0.520 -0.023" type="big"></AppPot>
-                <AppPot position="0.600 0.829 -0.018" type="big"></AppPot>
-                <AppPot position="0.194 1.855 -0.027" type="big"></AppPot>
-                <AppPot position="0.194 0.855 -0.027" type="small"></AppPot>
-                <AppPot position="0.194 0.113 -0.027" type="high"></AppPot>
-            </TheShelf>
+            <template v-for="(pot, index) in potsStore.getPots()" :key="index">
+                <AppPot
+                    :position="pot.position"
+                    :type="pot.type"
+                    :data-base="pot.isBase"
+                ></AppPot>
+            </template>
+
+            <TheShelf position="5.438 0 -3.431" rotation="0 -35 0"></TheShelf>
 
             <TheRiver position="0 0.2 0"></TheRiver>
 
@@ -320,7 +344,7 @@ onMounted(() => {
                 ></AppWaterCanPlaceholder>
             </TheMarket>
 
-            <TheBackPack position="0 0 -5"></TheBackPack>
+            <!-- <TheBackPack position="0 0 -5"></TheBackPack> -->
 
             <AppPlantingZone position="-5 0 6"></AppPlantingZone>
             <AppPlantingZone position="-5 0 7"></AppPlantingZone>
@@ -336,7 +360,7 @@ onMounted(() => {
                 <AppFlower position="1 0 0" flowerName="daisy"></AppFlower>
                 <AppFlower position="2 0 0" flowerName="tulip"></AppFlower>
             </a-entity>
-
+            <TheNavigationMesh></TheNavigationMesh>
             <TheFloor />
         </template>
 

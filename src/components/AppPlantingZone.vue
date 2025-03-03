@@ -167,6 +167,11 @@ watch(
                     "
                 ></a-entity>
                 <template v-if="zones[i - 1]">
+                    <a-sound
+                        src="#dirt-planting"
+                        positional="true"
+                        autoplay="true"
+                    ></a-sound>
                     <a-gltf-model
                         v-if="zones[i - 1].hydratationLevel === 1"
                         src="#seeding-process-step-1"

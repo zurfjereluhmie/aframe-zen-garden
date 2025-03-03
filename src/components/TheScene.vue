@@ -27,6 +27,7 @@ import AppStool from './AppStool.vue';
 import AppPhotoCamPlaceholder from './AppPhotoCamPlaceholder.vue';
 
 import '../aframe/outline.js';
+import TheNavigationMesh from './TheNavigationMesh.vue';
 
 const allAssetsLoaded = ref(false);
 const DAY_DURATION = 100000;
@@ -156,6 +157,10 @@ onMounted(() => {
             <!-- MODELS -->
             <a-asset-item id="scene" src="./assets/scene.glb"></a-asset-item>
             <a-asset-item id="market" src="./assets/market.glb"></a-asset-item>
+            <a-asset-item
+                id="navigation-mesh"
+                src="./assets/navigation-meshes/navigation-mesh.glb"
+            ></a-asset-item>
             <a-asset-item
                 id="character"
                 src="./assets/adventurer.glb"
@@ -309,7 +314,7 @@ onMounted(() => {
                 <AppPot :position="pot.position" :type="pot.type"></AppPot>
             </template>
 
-            <TheShelf position="5 0 -3" rotation="0 -55 0"></TheShelf>
+            <TheShelf position="5.438 0 -3.431" rotation="0 -35 0"></TheShelf>
 
             <TheRiver position="0 0.2 0"></TheRiver>
 
@@ -330,7 +335,7 @@ onMounted(() => {
             <AppPlantingZone position="-5 0 8"></AppPlantingZone>
 
             <!-- TODO: REMOVE -->
-            <a-entity id="debug-items" position="0 0 0" v-if="true">
+            <a-entity id="debug-items" position="0 0 0" v-if="false">
                 <AppPot position="0 1 0" type="high"></AppPot>
                 <!-- <a-box position="0 0.5 0"></a-box> -->
                 <AppLamp position="2 0 0.15"></AppLamp>
@@ -339,7 +344,7 @@ onMounted(() => {
                 <AppFlower position="1 0 0" flowerName="daisy"></AppFlower>
                 <AppFlower position="2 0 0" flowerName="tulip"></AppFlower>
             </a-entity>
-
+            <TheNavigationMesh></TheNavigationMesh>
             <TheFloor />
         </template>
 

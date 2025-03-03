@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 
-const isVisible = ref(true);
+const isVisible = ref(false);
 </script>
 
 <template>

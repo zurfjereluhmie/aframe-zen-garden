@@ -73,7 +73,7 @@ watch(
 </script>
 
 <template>
-    <template v-if="!photoCamStore.getCamsStatus()">
+    <template v-if="photoCamStore.getCamsStatus()">
         <a-entity
             :id="id"
             geometry="primitive: box; depth: 0.2; height: 0.2; width: 0.32"

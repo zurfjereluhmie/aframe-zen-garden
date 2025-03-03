@@ -155,6 +155,10 @@ onMounted(() => {
                 id="picture-taken"
                 src="./assets/sounds/sfx-picture.mp3"
             ></audio>
+            <audio
+                id="dirt-planting"
+                src="./assets/sounds/sfx-dirt-planting.mp3"
+            ></audio>
             <!-- END SFX -->
             <!-- END SOUNDS -->
 

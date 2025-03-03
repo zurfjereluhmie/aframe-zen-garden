@@ -63,7 +63,7 @@ onMounted(() => {
     <!-- The outline is still experimental, thus break the screenshot so we need to disable it whenever the user hold the camera -->
     <a-scene
         obb-collider="showColliders: false"
-        stats
+        _stats
         fog="type: linear; color: #a3d0ed; near: 30; far: 60"
         background="color: #a3d0ed;"
         :outline="renderOutline ? 'color: red; strength: 20' : null"

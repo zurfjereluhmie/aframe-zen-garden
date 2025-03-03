@@ -28,6 +28,7 @@ import AppPhotoCamPlaceholder from './AppPhotoCamPlaceholder.vue';
 
 import '../aframe/outline.js';
 import TheNavigationMesh from './TheNavigationMesh.vue';
+import TheWind from './TheWind.vue';
 
 const allAssetsLoaded = ref(false);
 const DAY_DURATION = 100000;
@@ -159,6 +160,7 @@ onMounted(() => {
                 id="dirt-planting"
                 src="./assets/sounds/sfx-dirt-planting.mp3"
             ></audio>
+            <audio id="wind" src="./assets/sounds/sfx-wind.mp3"></audio>
             <!-- END SFX -->
             <!-- END SOUNDS -->
 
@@ -291,6 +293,8 @@ onMounted(() => {
                     position="0 3.653 2.119"
                 ></a-entity>
             </template>
+
+            <TheWind></TheWind>
 
             <ThePhotoCam
                 position="-5.2 0.75 -2"

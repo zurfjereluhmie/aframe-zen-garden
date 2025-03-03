@@ -32,7 +32,7 @@ import TheWind from './TheWind.vue';
 
 const allAssetsLoaded = ref(false);
 const DAY_DURATION = 100000;
-const ENABLE_SUN_NIGHT_CYCLE = false;
+const ENABLE_SUN_NIGHT_CYCLE = true;
 const screenshotCameraSelector = ref('#head');
 const renderOutline = ref(false);
 

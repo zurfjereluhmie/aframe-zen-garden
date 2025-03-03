@@ -1,9 +1,73 @@
 <script setup>
-defineProps({
+import { onMounted, ref, useTemplateRef, watchEffect } from 'vue';
+
+const props = defineProps({
     revolutionTime: {
         type: Number,
         default: 100000,
     },
+});
+
+const animationCount = ref(1);
+const lightOrange = useTemplateRef('sun-light-orange');
+const lightWhite = useTemplateRef('sun-light-white');
+
+watchEffect(() => {
+    if (animationCount.value === 1) {
+        lightOrange.value?.setAttribute('animation', {
+            property: 'intensity',
+            to: 10,
+            dur: props.revolutionTime / 4,
+            easing: 'linear',
+        });
+        lightWhite.value?.setAttribute('animation', {
+            property: 'intensity',
+            to: 10,
+            dur: props.revolutionTime / 4,
+            easing: 'linear',
+        });
+        return;
+    }
+    if (animationCount.value === 2) {
+        lightOrange.value?.setAttribute('animation', {
+            property: 'intensity',
+            to: 0,
+            dur: props.revolutionTime / 4,
+            easing: 'easeInQuad',
+        });
+        lightWhite.value?.setAttribute('animation', {
+            property: 'intensity',
+            to: 0,
+            dur: props.revolutionTime / 4,
+            easing: 'easeInQuad',
+        });
+        return;
+    }
+    if (animationCount.value === 3) {
+        return;
+    }
+    if (animationCount.value === 4) {
+        lightWhite.value.setAttribute('animation', {
+            property: 'intensity',
+            to: 60,
+            dur: props.revolutionTime / 4,
+            easing: 'linear',
+        });
+        lightOrange.value.setAttribute('animation', {
+            property: 'intensity',
+            to: 100,
+            dur: props.revolutionTime / 4,
+            easing: 'linear',
+        });
+        return;
+    }
+});
+
+onMounted(() => {
+    setInterval(() => {
+        animationCount.value += 1;
+        if (animationCount.value > 4) animationCount.value = 1;
+    }, props.revolutionTime / 4);
 });
 </script>
 
@@ -14,16 +78,18 @@ defineProps({
     >
         <a-entity position="0 42 0">
             <a-light
+                ref="sun-light-orange"
                 type="point"
                 color="orange"
                 intensity="100"
                 position="0 0 0"
             ></a-light>
             <a-light
+                ref="sun-light-white"
                 type="point"
                 color="white"
-                :animation="`property: intensity; to: 0; dur: ${revolutionTime / 4}; loop: true; easing: linear; dir: alternate`"
-                intensity="100"
+                :_animation="`property: intensity; to: 0; dur: ${revolutionTime / 4}; easing: linear`"
+                intensity="60"
                 position="0 0 0"
             ></a-light>
             <a-sphere

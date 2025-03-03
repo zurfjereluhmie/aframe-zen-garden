@@ -241,6 +241,14 @@ onMounted(() => {
                 src="./assets/flowers/seed-pack-violet.glb"
             ></a-asset-item>
             <a-asset-item
+                id="flower-blue"
+                src="./assets/flowers/blue.glb"
+            ></a-asset-item>
+            <a-asset-item
+                id="flower-blue-seeds"
+                src="./assets/flowers/seed-pack-blue.glb"
+            ></a-asset-item>
+            <a-asset-item
                 id="seeding-process-step-1"
                 src="./assets/seeding-process/step-1.glb"
             ></a-asset-item>
@@ -359,6 +367,7 @@ onMounted(() => {
                 <AppFlower position="-1 0 0" flowerName="sunflower"></AppFlower>
                 <AppFlower position="1 0 0" flowerName="daisy"></AppFlower>
                 <AppFlower position="2 0 0" flowerName="tulip"></AppFlower>
+                <AppFlower position="3 0 0" flowerName="blue"></AppFlower>
             </a-entity>
             <TheNavigationMesh></TheNavigationMesh>
             <TheFloor />

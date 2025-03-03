@@ -35,6 +35,10 @@ const flowers = {
         scale: '1.5 1.5 1.5',
         hitbox: 'width: 0.25; height: 0.6; depth: 0.15',
     },
+    blue: {
+        scale: '1.2 1.2 1.2',
+        hitbox: 'width: 0.25; height: 0.6; depth: 0.3',
+    },
 };
 
 const flowerEntity = useTemplateRef('flower-entity');

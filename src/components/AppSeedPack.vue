@@ -19,7 +19,7 @@ defineProps({
         type: String,
         required: true,
         validator: (value) =>
-            ['daisy', 'sunflower', 'tulip', 'violet'].includes(value),
+            ['daisy', 'sunflower', 'tulip', 'violet', 'blue'].includes(value),
     },
 });
 

@@ -311,7 +311,11 @@ onMounted(() => {
             </template>
 
             <template v-for="(pot, index) in potsStore.getPots()" :key="index">
-                <AppPot :position="pot.position" :type="pot.type"></AppPot>
+                <AppPot
+                    :position="pot.position"
+                    :type="pot.type"
+                    :data-base="pot.isBase"
+                ></AppPot>
             </template>
 
             <TheShelf position="5.438 0 -3.431" rotation="0 -35 0"></TheShelf>

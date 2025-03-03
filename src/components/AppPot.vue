@@ -72,13 +72,20 @@ const handleGrab = (event) => {
         droppedEl: droppedEl.value,
     });
 
-    const { x, y, z } = event.detail.el.object3D.position;
-    setTimeout(() => {
-        potsStore.addPot({
-            type: event.detail.el.dataset.type,
-            position: `${x} ${y} ${z}`,
-        });
-    }, 2000);
+    const isBase = !!event.detail.el.dataset.base;
+
+    if (isBase) {
+        const { x, y, z } = event.detail.el.object3D.position;
+        setTimeout(() => {
+            potsStore.addPot({
+                type: event.detail.el.dataset.type,
+                position: `${x} ${y} ${z}`,
+                isBase: true,
+            });
+        }, 2000);
+
+        event.detail.el.dataset.base = '';
+    }
 };
 
 watch(

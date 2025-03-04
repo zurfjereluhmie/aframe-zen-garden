@@ -289,7 +289,7 @@ onMounted(() => {
         </a-assets>
 
         <template v-if="allAssetsLoaded">
-            <a-entity v-if="ENABLE_SUN_NIGHT_CYCLE" rotation="0 -120 0">
+            <a-entity v-if="ENABLE_SUN_NIGHT_CYCLE" rotation="0 60 0">
                 <TheSky :revolution-time="DAY_DURATION"></TheSky>
                 <TheSun :revolution-time="DAY_DURATION"></TheSun>
                 <TheMoon :revolution-time="DAY_DURATION"></TheMoon>

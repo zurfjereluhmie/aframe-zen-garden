@@ -56,13 +56,13 @@ watchEffect(() => {
     if (animationCount.value === 4) {
         lightWhite.value.setAttribute('animation', {
             property: 'intensity',
-            to: 80,
+            to: 100,
             dur: props.revolutionTime / 4,
             easing: 'linear',
         });
         lightOrange.value.setAttribute('animation', {
             property: 'intensity',
-            to: 100,
+            to: 120,
             dur: props.revolutionTime / 4,
             easing: 'linear',
         });
@@ -94,7 +94,7 @@ onMounted(() => {
                 ref="sun-light-orange"
                 type="point"
                 color="orange"
-                intensity="100"
+                intensity="120"
                 position="0 0 0"
             ></a-light>
             <a-light
@@ -102,7 +102,7 @@ onMounted(() => {
                 type="point"
                 color="white"
                 :_animation="`property: intensity; to: 0; dur: ${revolutionTime / 4}; easing: linear`"
-                intensity="80"
+                intensity="100"
                 position="0 0 0"
             ></a-light>
             <a-sphere

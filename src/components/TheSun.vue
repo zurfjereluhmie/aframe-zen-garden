@@ -9,6 +9,7 @@ const props = defineProps({
 });
 
 const animationCount = ref(1);
+const sun = useTemplateRef('sun');
 const lightOrange = useTemplateRef('sun-light-orange');
 const lightWhite = useTemplateRef('sun-light-white');
 
@@ -29,17 +30,23 @@ watchEffect(() => {
         return;
     }
     if (animationCount.value === 2) {
-        lightOrange.value?.setAttribute('animation', {
+        lightOrange.value.setAttribute('animation', {
             property: 'intensity',
             to: 0,
-            dur: props.revolutionTime / 4,
-            easing: 'easeInQuad',
+            dur: props.revolutionTime / 24,
+            easing: 'linear',
         });
-        lightWhite.value?.setAttribute('animation', {
+        lightWhite.value.setAttribute('animation', {
             property: 'intensity',
             to: 0,
-            dur: props.revolutionTime / 4,
-            easing: 'easeInQuad',
+            dur: props.revolutionTime / 24,
+            easing: 'linear',
+        });
+        sun.value.setAttribute('animation', {
+            property: 'opacity',
+            to: 0,
+            dur: props.revolutionTime / 32,
+            easing: 'linear',
         });
         return;
     }
@@ -49,7 +56,7 @@ watchEffect(() => {
     if (animationCount.value === 4) {
         lightWhite.value.setAttribute('animation', {
             property: 'intensity',
-            to: 60,
+            to: 80,
             dur: props.revolutionTime / 4,
             easing: 'linear',
         });
@@ -57,6 +64,12 @@ watchEffect(() => {
             property: 'intensity',
             to: 100,
             dur: props.revolutionTime / 4,
+            easing: 'linear',
+        });
+        sun.value.setAttribute('animation', {
+            property: 'opacity',
+            to: 1,
+            dur: props.revolutionTime / 24,
             easing: 'linear',
         });
         return;
@@ -89,10 +102,12 @@ onMounted(() => {
                 type="point"
                 color="white"
                 :_animation="`property: intensity; to: 0; dur: ${revolutionTime / 4}; easing: linear`"
-                intensity="60"
+                intensity="80"
                 position="0 0 0"
             ></a-light>
             <a-sphere
+                ref="sun"
+                opacity="0.99"
                 color="yellow"
                 radius="3"
                 position="0 0 0"

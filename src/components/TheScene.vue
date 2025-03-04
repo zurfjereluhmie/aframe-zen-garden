@@ -25,10 +25,11 @@ import ThePhotoCam from './ThePhotoCam.vue';
 import ThePictureDisplay from './ThePictureDisplay.vue';
 import AppStool from './AppStool.vue';
 import AppPhotoCamPlaceholder from './AppPhotoCamPlaceholder.vue';
-
-import '../aframe/outline.js';
 import TheNavigationMesh from './TheNavigationMesh.vue';
 import TheWind from './TheWind.vue';
+import TheSky from './TheSky.vue';
+
+import '../aframe/outline.js';
 
 const allAssetsLoaded = ref(false);
 const DAY_DURATION = 100000;
@@ -64,8 +65,8 @@ onMounted(() => {
     <a-scene
         obb-collider="showColliders: false"
         _stats
-        fog="type: linear; color: #a3d0ed; near: 30; far: 60"
-        background="color: #a3d0ed;"
+        fog="type: linear; color: #a3d0ed; near: 30; far: 80"
+        :background="ENABLE_SUN_NIGHT_CYCLE ? 'color: #000;' : 'color: #a3d0ed'"
         :outline="renderOutline ? 'color: red; strength: 20' : null"
         :screenshot="`camera: ${screenshotCameraSelector}; width: 1920; height: 1080;`"
     >
@@ -288,10 +289,11 @@ onMounted(() => {
         </a-assets>
 
         <template v-if="allAssetsLoaded">
-            <template v-if="ENABLE_SUN_NIGHT_CYCLE">
+            <a-entity v-if="ENABLE_SUN_NIGHT_CYCLE" rotation="0 -120 0">
+                <TheSky :revolution-time="DAY_DURATION"></TheSky>
                 <TheSun :revolution-time="DAY_DURATION"></TheSun>
                 <TheMoon :revolution-time="DAY_DURATION"></TheMoon>
-            </template>
+            </a-entity>
             <template v-else>
                 <a-entity
                     light="type: ambient; color: #fff; intensity: 2.7"

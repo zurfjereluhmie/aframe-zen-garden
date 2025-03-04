@@ -9,6 +9,7 @@ const props = defineProps({
 });
 
 const animationCount = ref(1);
+const moon = useTemplateRef('moon');
 const lightBlue = useTemplateRef('moon-light-blue');
 const lightWhite = useTemplateRef('moon-light-white');
 
@@ -27,6 +28,12 @@ watchEffect(() => {
             property: 'intensity',
             to: 10,
             dur: props.revolutionTime / 4,
+            easing: 'linear',
+        });
+        moon.value.setAttribute('animation', {
+            property: 'opacity',
+            to: 1,
+            dur: props.revolutionTime / 24,
             easing: 'linear',
         });
         return;
@@ -50,14 +57,20 @@ watchEffect(() => {
         lightWhite.value.setAttribute('animation', {
             property: 'intensity',
             to: 0,
-            dur: props.revolutionTime / 4,
-            easing: 'easeInQuad',
+            dur: props.revolutionTime / 16,
+            easing: 'linear',
         });
         lightBlue.value.setAttribute('animation', {
             property: 'intensity',
             to: 0,
-            dur: props.revolutionTime / 4,
-            easing: 'easeInQuad',
+            dur: props.revolutionTime / 16,
+            easing: 'linear',
+        });
+        moon.value.setAttribute('animation', {
+            property: 'opacity',
+            to: 0,
+            dur: props.revolutionTime / 24,
+            easing: 'linear',
         });
         return;
     }
@@ -92,6 +105,8 @@ onMounted(() => {
                 position="0 0 0"
             ></a-light>
             <a-sphere
+                ref="moon"
+                opacity="0"
                 color="white"
                 radius="2"
                 position="0 0 0"
